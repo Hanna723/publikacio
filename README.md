@@ -7,7 +7,23 @@ Publikáció bíráló rendszer a Programrendszerek fejlesztése 2025 tárgy ker
 
 `docker compose up -d`
 
-Az adatbázis az alábbi linken érhető el: http://localhost:8081/
+Az adatbázis a következő linken érhető el: http://localhost:8081/
+
+## Angular
+
+Az Angular projekt a `publication` mappában található. Futtatás ezen a mappán belül lehetséges:
+
+`cd publication`
+
+Dependency-k letöltése:
+
+`npm install`
+
+Futtatás:
+
+`ng serve`
+
+Ezután az alkalmazás a következő linken érhető el: http://localhost:4200/
 
 # Adatbázis
 
