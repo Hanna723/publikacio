@@ -5,15 +5,19 @@ Publikáció bíráló rendszer a Programrendszerek fejlesztése 2025 tárgy ker
 
 ## MongoDB
 
+A szerveroldali projekt a `server` mappában található. Futtatás ezen a mappán belül lehetséges:
+
+`cd server`
+
 `docker compose up -d`
 
 Az adatbázis a következő linken érhető el: http://localhost:8081/
 
 ## Angular
 
-Az Angular projekt a `publication` mappában található. Futtatás ezen a mappán belül lehetséges:
+Az Angular projekt a `client/publication` mappában található. Futtatás ezen a mappán belül lehetséges:
 
-`cd publication`
+`cd client/publication/`
 
 Dependency-k letöltése:
 
