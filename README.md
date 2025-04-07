@@ -3,27 +3,35 @@ Publikáció bíráló rendszer a Programrendszerek fejlesztése 2025 tárgy ker
 
 # Futtatás
 
-## MongoDB
+## Adatbázis
 
-A szerveroldali projekt a `server` mappában található. Futtatás ezen a mappán belül lehetséges:
+Az adatbázishoz kapcsolódó fájlok a `database` mappában találhatók. Futtatás ezen a mappán belül lehetséges:
 
-`cd server`
+`cd database`
 
 `docker compose up -d`
 
 Az adatbázis a következő linken érhető el: http://localhost:8081/
 
-## Angular
+## Szerver
+
+A `server` mappa tartalmazza a szerveroldali kódot. Futtatás ezen a mappán belül lehetséges:
+
+`cd server`
+
+`npm install`
+
+`npm run build`
+
+`npm run start`
+
+## Kliens
 
 Az Angular projekt a `client/publication` mappában található. Futtatás ezen a mappán belül lehetséges:
 
 `cd client/publication/`
 
-Dependency-k letöltése:
-
 `npm install`
-
-Futtatás:
 
 `ng serve`
 
