@@ -3,6 +3,7 @@ services:
 
   mongo:
     image: mongo
+    container_name: mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -10,10 +11,15 @@ services:
       MONGO_INITDB_DATABASE: admin
     volumes:
       - ./setup/mongo-init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "27017:27017"
 
   mongo-express:
     image: mongo-express
+    container_name: mongo-express
     restart: always
+    depends_on:
+      - mongo
     ports:
       - 8081:8081
     environment:

@@ -1,0 +1,20 @@
+{
+  "name": "publication",
+  "version": "1.0.0",
+  "description": "The server side of the publication project",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js"
+  },
+  "author": "Hanna Somogyvári",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
+  }
+}
