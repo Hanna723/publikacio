@@ -1,6 +1,15 @@
-db.auth('root', 'example');
-
 db = db.getSiblingDB('publication');
+
+db.createUser({
+	user: 'publicationAdmin',
+	pwd: 'example',
+	roles: [
+		{
+			role: 'readWrite',
+			db: 'publication',
+		},
+	],
+});
 
 db.role.insertMany([
 	{ _id: '67f2ffa3768572e24b9f0efb', name: 'Author' },

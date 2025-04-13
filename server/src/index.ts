@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 
 const app = express();
 const port = 5000;
-const dbUrl = 'mongodb://localhost:27017/publication';
+const dbUrl = 'mongodb://publicationAdmin:example@localhost:27017/publication';
 
 mongoose
 	.connect(dbUrl)
