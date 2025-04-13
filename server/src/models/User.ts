@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import mongoose, { Model, ObjectId, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
 
 const SALT_FACTOR = 10;
 

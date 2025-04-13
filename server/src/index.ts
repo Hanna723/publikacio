@@ -2,12 +2,13 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import expressSession  from 'express-session';
+import expressSession from 'express-session';
 import mongoose from 'mongoose';
 import passport from 'passport';
 
 import { configureUserRoutes } from './routes/user-routes';
 import { configurePassport } from './passport/passport';
+import { configureRoleRoutes } from './routes/role-routes';
 
 const app = express();
 const port = 5000;
@@ -39,9 +40,9 @@ const corsOptions = {
 };
 
 const sessionOptions: expressSession.SessionOptions = {
-    secret: 'publication-secret',
-    resave: false,
-    saveUninitialized: false
+	secret: 'publication-secret',
+	resave: false,
+	saveUninitialized: false,
 };
 
 app.use(cors(corsOptions));
@@ -55,6 +56,7 @@ app.use(passport.session());
 configurePassport(passport);
 
 app.use('/user', configureUserRoutes(passport, express.Router()));
+app.use('/roles', configureRoleRoutes(express.Router()));
 
 app.listen(port, () => {
 	console.log('Server is listening on port ' + port.toString());
