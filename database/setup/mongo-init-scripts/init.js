@@ -17,14 +17,26 @@ db.roles.insertMany([
 	{ _id: '67f2ffb4768572e24b9f0eff', name: 'Editor' },
 ]);
 
-db.articles.insert({
-	_id: '67f2f12b4ff1117b9f38bc48',
-	author: '67f2f0a94ff1117b9f38bc44',
-	title: 'My article',
-	content: 'This is my very first article.',
-	reviewers: ['67f2ef4a4ff1117b9f38bc40'],
-	isAccepted: false,
-});
+db.articles.insert(
+	{
+		_id: '67f2f12b4ff1117b9f38bc48',
+		author: '67f2f0a94ff1117b9f38bc44',
+		title: 'My article',
+		content: 'This is my very first article.',
+		readyForReview: true,
+		reviewers: ['67f2ef4a4ff1117b9f38bc40'],
+		isAccepted: false,
+	},
+	{
+		_id: '67f2f12b4ff1117b9f38bc47',
+		author: '67f2f0a94ff1117b9f38bc44',
+		title: 'WIP',
+		content: 'Still working on this article.',
+		readyForReview: false,
+		reviewers: [],
+		isAccepted: false,
+	}
+);
 
 db.reviews.insert({
 	_id: '67f2f0134ff1117b9f38bc42',

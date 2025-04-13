@@ -9,6 +9,7 @@ import passport from 'passport';
 import { configureUserRoutes } from './routes/user-routes';
 import { configurePassport } from './passport/passport';
 import { configureRoleRoutes } from './routes/role-routes';
+import { configureArticleRoutes } from './routes/article-routes';
 
 const app = express();
 const port = 5000;
@@ -55,8 +56,9 @@ app.use(passport.session());
 
 configurePassport(passport);
 
-app.use('/user', configureUserRoutes(passport, express.Router()));
+app.use('/article', configureArticleRoutes(express.Router()));
 app.use('/roles', configureRoleRoutes(express.Router()));
+app.use('/user', configureUserRoutes(passport, express.Router()));
 
 app.listen(port, () => {
 	console.log('Server is listening on port ' + port.toString());

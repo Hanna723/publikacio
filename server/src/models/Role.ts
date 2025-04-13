@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import mongoose, { Model, ObjectId, Schema } from 'mongoose';
 
 interface IRole extends Document {
