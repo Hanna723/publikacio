@@ -121,5 +121,28 @@ export const configureUserRoutes = (
 		}
 	});
 
+	router.delete('/', (req: Request, res: Response) => {
+		if (req.isAuthenticated()) {
+			const user = req.user as PublicUser;
+
+			req.logout((error) => {
+				if (error) {
+					console.log(error);
+					res.status(500).send('Internal server error.');
+				}
+				User.deleteOne({ _id: user._id })
+					.then(() => {
+						res.status(200).send('User deleted.');
+					})
+					.catch((error) => {
+						console.log(error);
+						res.status(500).send('Internal server error.');
+					});
+			});
+		} else {
+			res.status(500).send('User is not logged in.');
+		}
+	});
+
 	return router;
 };
