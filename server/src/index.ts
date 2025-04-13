@@ -1,7 +1,13 @@
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import express from 'express';
+import expressSession  from 'express-session';
 import mongoose from 'mongoose';
+import passport from 'passport';
 
-import { Request, Response } from 'express';
+import { configureRoutes } from './routes/routes';
+import { configurePassport } from './passport/passport';
 
 const app = express();
 const port = 5000;
@@ -17,9 +23,38 @@ mongoose
 		return;
 	});
 
-app.get('/', (req: Request, res: Response) => {
-	res.status(200).send('Hello, World!');
-});
+const whitelist = ['*', 'http://localhost:4200'];
+const corsOptions = {
+	origin: (
+		origin: string | undefined,
+		callback: (err: Error | null, allowed?: boolean) => void
+	) => {
+		if (whitelist.indexOf(origin!) !== -1 || whitelist.includes('*')) {
+			callback(null, true);
+		} else {
+			callback(new Error('Not allowed by CORS.'));
+		}
+	},
+	credentials: true,
+};
+
+const sessionOptions: expressSession.SessionOptions = {
+    secret: 'publication-secret',
+    resave: false,
+    saveUninitialized: false
+};
+
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(expressSession(sessionOptions));
+app.use(passport.initialize());
+app.use(passport.session());
+
+configurePassport(passport);
+
+app.use('/', configureRoutes(passport, express.Router()));
 
 app.listen(port, () => {
 	console.log('Server is listening on port ' + port.toString());
