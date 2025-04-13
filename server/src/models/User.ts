@@ -1,10 +1,9 @@
 import bcrypt from 'bcrypt';
-import mongoose, { Model, Schema } from 'mongoose';
+import mongoose, { Model, ObjectId, Schema } from 'mongoose';
 
 const SALT_FACTOR = 10;
 
 interface IUser extends Document {
-	// id: string;
 	email: string;
 	password: string;
 	firstName: string;
@@ -16,8 +15,15 @@ interface IUser extends Document {
 	) => void;
 }
 
+export interface PublicUser {
+	_id: any;
+	email: string;
+	firstName: string;
+	lastName: string;
+	role: string;
+}
+
 const UserSchema: Schema<IUser> = new mongoose.Schema({
-	// id: { type: String, required: true },
 	email: { type: String, required: true },
 	password: { type: String, required: true },
 	firstName: { type: String, required: true },

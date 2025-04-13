@@ -1,37 +1,51 @@
 import { PassportStatic } from 'passport';
 import { Strategy } from 'passport-local';
-import { User } from '../models/User';
+import { User, PublicUser } from '../models/User';
 
 export const configurePassport = (passport: PassportStatic): PassportStatic => {
+	passport.serializeUser((user: Express.User, done) => {
+		console.log('user is serialized.');
+		done(null, user);
+	});
 
-    passport.serializeUser((user: Express.User, done) => {
-        console.log('user is serialized.');
-        done(null, user);
-    });
+	passport.deserializeUser((user: Express.User, done) => {
+		console.log('user is deserialized.');
+		done(null, user);
+	});
 
-    passport.deserializeUser((user: Express.User, done) => {
-        console.log('user is deserialized.');
-        done(null, user);
-    });
+	passport.use(
+		'local',
+		new Strategy(
+			{ usernameField: 'email', passwordField: 'password' },
+			(email, password, done) => {
+				const query = User.findOne({ email: email });
+				query
+					.then((user) => {
+						if (user) {
+							user.comparePassword(password, (error, _) => {
+								if (error) {
+									done('Incorrect username or password.');
+								} else {
+                                    let publicUser: PublicUser = {
+                                        _id: user._id,
+                                        email: user.email,
+                                        firstName: user.firstName,
+                                        lastName: user.lastName,
+                                        role: user.role
+                                    }
+									done(null, publicUser);
+								}
+							});
+						} else {
+							done(null, undefined);
+						}
+					})
+					.catch((error) => {
+						done(error);
+					});
+			}
+		)
+	);
 
-    passport.use('local', new Strategy((email, password, done) => {
-        const query = User.findOne({ email: email });
-        query.then(user => {
-            if (user) {
-                user.comparePassword(password, (error, _) => {
-                    if (error) {
-                        done('Incorrect username or password.');
-                    } else {
-                        done(null, user._id);
-                    }
-                });
-            } else {
-                done(null, undefined);
-            }
-        }).catch(error => {
-            done(error);
-        })
-    }));
-
-    return passport;
-}
+	return passport;
+};

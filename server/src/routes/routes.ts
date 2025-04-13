@@ -1,9 +1,12 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import { PassportStatic } from 'passport';
 
 import { User } from '../models/User';
 
-export const configureRoutes = (passport: PassportStatic, router: Router): Router => {
+export const configureRoutes = (
+	passport: PassportStatic,
+	router: Router
+): Router => {
 	router.post('/signup', (req: Request, res: Response) => {
 		const email = req.body.email;
 		const password = req.body.password;
@@ -21,14 +24,37 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
 		user
 			.save()
 			.then((data) => {
-                console.log(data)
+				console.log(data);
 				res.status(200).send(data);
 			})
 			.catch((error) => {
-                console.log(error)
+				console.log(error);
 				res.status(500).send(error);
 			});
 	});
 
+	router.post('/login', (req: Request, res: Response, next: NextFunction) => {
+		passport.authenticate(
+			'local',
+			(error: string | null, user: typeof User) => {
+				if (error) {
+					res.status(500).send(error);
+				} else {
+					if (!user) {
+						res.status(400).send('User not found.');
+					} else {
+						req.login(user, (err: string | null) => {
+							if (err) {
+								console.log(err);
+								res.status(500).send('Internal server error.');
+							} else {
+								res.status(200).send(user);
+							}
+						});
+					}
+				}
+			}
+		)(req, res, next);
+	});
 	return router;
 };
