@@ -6,7 +6,7 @@ import expressSession  from 'express-session';
 import mongoose from 'mongoose';
 import passport from 'passport';
 
-import { configureRoutes } from './routes/routes';
+import { configureUserRoutes } from './routes/user-routes';
 import { configurePassport } from './passport/passport';
 
 const app = express();
@@ -54,7 +54,7 @@ app.use(passport.session());
 
 configurePassport(passport);
 
-app.use('/', configureRoutes(passport, express.Router()));
+app.use('/user', configureUserRoutes(passport, express.Router()));
 
 app.listen(port, () => {
 	console.log('Server is listening on port ' + port.toString());

@@ -3,7 +3,7 @@ import { PassportStatic } from 'passport';
 
 import { User } from '../models/User';
 
-export const configureRoutes = (
+export const configureUserRoutes = (
 	passport: PassportStatic,
 	router: Router
 ): Router => {
@@ -78,5 +78,6 @@ export const configureRoutes = (
             res.status(500).send(false);
         }
     });
+
 	return router;
 };
