@@ -11,13 +11,13 @@ db.createUser({
 	],
 });
 
-db.role.insertMany([
+db.roles.insertMany([
 	{ _id: '67f2ffa3768572e24b9f0efb', name: 'Author' },
 	{ _id: '67f2ffac768572e24b9f0efd', name: 'Reviewer' },
 	{ _id: '67f2ffb4768572e24b9f0eff', name: 'Editor' },
 ]);
 
-db.article.insert({
+db.articles.insert({
 	_id: '67f2f12b4ff1117b9f38bc48',
 	author: '67f2f0a94ff1117b9f38bc44',
 	title: 'My article',
@@ -26,7 +26,7 @@ db.article.insert({
 	isAccepted: false,
 });
 
-db.review.insert({
+db.reviews.insert({
 	_id: '67f2f0134ff1117b9f38bc42',
 	text: 'Very good',
 	isAccepted: true,
@@ -34,7 +34,7 @@ db.review.insert({
 	reviewer: '67f2ef4a4ff1117b9f38bc40',
 });
 
-db.user.insertMany([
+db.users.insertMany([
 	{
 		_id: '67f2ef4a4ff1117b9f38bc40',
 		email: 'reviewer@mailinator.com',
