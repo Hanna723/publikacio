@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import mongoose, { Model, Schema } from 'mongoose';
+import mongoose, { Model, ObjectId, Schema } from 'mongoose';
 
 const SALT_FACTOR = 10;
 
@@ -8,7 +8,7 @@ interface IUser extends Document {
 	password: string;
 	firstName: string;
 	lastName: string;
-	role: string;
+	role: ObjectId;
 	comparePassword: (
 		candidatePassword: string,
 		callback: (error: Error | null, isMatch: boolean) => void
@@ -20,7 +20,7 @@ export interface PublicUser {
 	email: string;
 	firstName: string;
 	lastName: string;
-	role: string;
+	role: ObjectId;
 }
 
 const UserSchema: Schema<IUser> = new mongoose.Schema({
