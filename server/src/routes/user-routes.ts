@@ -22,11 +22,21 @@ export const configureUserRoutes = (
 			role: role,
 		});
 
-		user
-			.save()
-			.then((data) => {
-				console.log(data);
-				res.status(200).send(data);
+		User.exists({ email: user.email })
+			.then((existingUser) => {
+				if (existingUser) {
+					res.status(500).send('Email already in use');
+				} else {
+					user
+						.save()
+						.then((data) => {
+							res.status(200).send(data);
+						})
+						.catch((error) => {
+							console.log(error);
+							res.status(500).send(error);
+						});
+				}
 			})
 			.catch((error) => {
 				console.log(error);
