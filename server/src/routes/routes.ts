@@ -56,5 +56,27 @@ export const configureRoutes = (
 			}
 		)(req, res, next);
 	});
+
+	router.post('/logout', (req: Request, res: Response) => {
+        if (req.isAuthenticated()) {
+            req.logout((error) => {
+                if (error) {
+                    console.log(error);
+                    res.status(500).send('Internal server error.');
+                }
+                res.status(200).send('Successfully logged out.');
+            })
+        } else {
+            res.status(500).send('User is not logged in.');
+        }
+    });
+
+    router.get('/is-authenticated', (req: Request, res: Response) => {
+        if (req.isAuthenticated()) {
+            res.status(200).send(true);            
+        } else {
+            res.status(500).send(false);
+        }
+    });
 	return router;
 };
