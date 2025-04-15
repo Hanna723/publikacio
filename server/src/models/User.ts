@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import mongoose, { Model, ObjectId, Schema } from 'mongoose';
+import mongoose, { Model, Schema, Types } from 'mongoose';
 
 const SALT_FACTOR = 10;
 
@@ -8,7 +8,7 @@ interface IUser extends Document {
 	password: string;
 	firstName: string;
 	lastName: string;
-	role: ObjectId;
+	role: Types.ObjectId;
 	comparePassword: (
 		candidatePassword: string,
 		callback: (error: Error | null, isMatch: boolean) => void
@@ -16,11 +16,11 @@ interface IUser extends Document {
 }
 
 export interface PublicUser {
-	_id: any;
+	_id: string;
 	email: string;
 	firstName: string;
 	lastName: string;
-	role: ObjectId;
+	role: Types.ObjectId;
 }
 
 const UserSchema: Schema<IUser> = new mongoose.Schema({
@@ -28,7 +28,7 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
 	password: { type: String, required: true },
 	firstName: { type: String, required: true },
 	lastName: { type: String, required: true },
-	role: { type: String, required: true },
+	role: { type: Schema.Types.ObjectId, required: true },
 });
 
 UserSchema.pre<IUser>('save', function (next) {

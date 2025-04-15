@@ -1,20 +1,20 @@
-import mongoose, { Model, ObjectId, Schema } from 'mongoose';
+import mongoose, { Model, Schema, Types } from 'mongoose';
 
-interface IArticle extends Document {
-	author: ObjectId;
+export interface IArticle extends Document {
+	author: Types.ObjectId;
 	title: string;
 	content: string;
 	readyForReview: boolean;
-	reviewers: ObjectId[];
+	reviewers: Types.ObjectId[];
 	isAccepted: boolean;
 }
 
 const ArticleSchema: Schema<IArticle> = new mongoose.Schema({
-	author: { type: String, required: true },
+	author: { type: Schema.Types.ObjectId, required: true },
 	title: { type: String, required: true },
 	content: { type: String, required: false },
 	readyForReview: { type: Boolean, required: true },
-	reviewers: { type: [String], required: true },
+	reviewers: { type: [Schema.Types.ObjectId], required: true },
 	isAccepted: { type: Boolean, required: true },
 });
 

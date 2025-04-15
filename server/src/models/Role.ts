@@ -1,12 +1,12 @@
-import mongoose, { Model, ObjectId, Schema } from 'mongoose';
+import mongoose, { Model, Schema, Types } from 'mongoose';
 
 interface IRole extends Document {
-	_id: ObjectId;
+	_id: Types.ObjectId;
 	name: string;
 }
 
 const RoleSchema: Schema<IRole> = new mongoose.Schema({
-	_id: { type: String, required: true },
+	_id: { type: Schema.Types.ObjectId, required: true },
 	name: { type: String, required: true },
 });
 

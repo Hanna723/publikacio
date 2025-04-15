@@ -1,6 +1,6 @@
 import { PassportStatic } from 'passport';
 import { Strategy } from 'passport-local';
-import { User, PublicUser } from '../models/User';
+import { User } from '../models/User';
 
 export const configurePassport = (passport: PassportStatic): PassportStatic => {
 	passport.serializeUser((user: Express.User, done) => {
@@ -26,7 +26,7 @@ export const configurePassport = (passport: PassportStatic): PassportStatic => {
 								if (error) {
 									done('Incorrect username or password.');
 								} else {
-                                    let publicUser: PublicUser = {
+                                    let publicUser: any = {
                                         _id: user._id,
                                         email: user.email,
                                         firstName: user.firstName,
