@@ -1,7 +1,10 @@
 import { Router, Request, Response, NextFunction } from 'express';
+import { HydratedDocument, Types } from 'mongoose';
 import { PassportStatic } from 'passport';
 
+import { Article, IArticle } from '../models/Article';
 import { PublicUser, User } from '../models/User';
+import { Review } from '../models/Review';
 import { Role } from '../models/Role';
 
 export const configureUserRoutes = (
@@ -135,15 +138,85 @@ export const configureUserRoutes = (
 		}
 
 		const user = req.user as PublicUser;
+		const userId = new Types.ObjectId(user._id);
 
 		req.logout((error) => {
 			if (error) {
 				console.log(error);
 				res.status(500).send('Internal server error.');
 			}
-			User.deleteOne({ _id: user._id })
-				.then(() => {
-					res.status(200).send('User deleted.');
+
+			Role.findById(user.role)
+				.then((role) => {
+					if (!role) {
+						res.status(500).send('Internal server error.');
+					} else {
+						if (role.name === 'Author') {
+							Article.find({ author: userId })
+								.then((articles) => {
+									articles.forEach((article) => {
+										Review.deleteMany({ article: article._id })
+											.then(() => {
+												console.log("Reviews of author's article deleted.");
+											})
+											.catch((error) => {
+												console.log(error);
+												res.status(500).send('Internal server error.');
+											});
+									});
+								})
+								.catch((error) => {
+									console.log(error);
+									res.status(500).send('Internal server error.');
+								});
+
+							Article.deleteMany({ author: userId })
+								.then(() => {
+									console.log('Articles of author deleted.');
+								})
+								.catch((error) => {
+									console.log(error);
+									res.status(500).send('Internal server error.');
+								});
+						} else if (role.name === 'Reviewer') {
+							Review.deleteMany({ reviewer: userId })
+								.then(() => {
+									console.log('Reviews of reviewer deleted.');
+								})
+								.catch((error) => {
+									console.log(error);
+									res.status(500).send('Internal server error.');
+								});
+
+							Article.find()
+								.then((articles) => {
+									articles = articles.filter((article) =>
+										article.reviewers.includes(userId)
+									);
+
+									articles.forEach((article) => {
+										article.reviewers = article.reviewers.filter(
+											(reviewer) => !reviewer.equals(userId)
+										);
+
+										handleArticleAcception(article._id, article, res, userId);
+									});
+								})
+								.catch((error) => {
+									console.log(error);
+									res.status(500).send('Internal server error.');
+								});
+						}
+
+						User.deleteOne({ _id: user._id })
+							.then(() => {
+								res.status(200).send('User deleted.');
+							})
+							.catch((error) => {
+								console.log(error);
+								res.status(500).send('Internal server error.');
+							});
+					}
 				})
 				.catch((error) => {
 					console.log(error);
@@ -151,6 +224,48 @@ export const configureUserRoutes = (
 				});
 		});
 	});
+
+	function handleArticleAcception(
+		articleId: Types.ObjectId,
+		article: HydratedDocument<IArticle>,
+		res: Response,
+		deletedReviewerId: Types.ObjectId
+	) {
+		Review.find({ article: articleId })
+			.then((reviews) => {
+				let acceptedReviews = reviews.filter(
+					(review) =>
+						review.isAccepted && !review.reviewer.equals(deletedReviewerId)
+				).length;
+				let allReviews = reviews.filter(
+					(review) => !review.reviewer.equals(deletedReviewerId)
+				).length;
+
+				if (allReviews === 2 && acceptedReviews === 2) {
+					article.isAccepted = true;
+				} else if (allReviews > 2 && acceptedReviews >= 2) {
+					article.isAccepted = true;
+				} else if (allReviews > 2) {
+					article.isAccepted = false;
+				} else {
+					article.isAccepted = undefined;
+				}
+
+				article
+					.save()
+					.then(() => {
+						console.log('Article accepted: ' + article.isAccepted);
+					})
+					.catch((error) => {
+						console.log(error);
+						res.status(500).send('Internal server error');
+					});
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			});
+	}
 
 	return router;
 };

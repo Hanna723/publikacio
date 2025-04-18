@@ -148,7 +148,7 @@ export const configureArticleRoutes = (router: Router): Router => {
 		}
 
 		const user = req.user as PublicUser;
-		
+
 		Role.findById(user.role)
 			.then((role) => {
 				if (!role) {
@@ -201,6 +201,15 @@ export const configureArticleRoutes = (router: Router): Router => {
 							} else if (!article.author.equals(userId)) {
 								res.status(401).send('Unauthorized');
 							} else {
+								Review.deleteMany({ article: article._id })
+									.then(() => {
+										console.log('Reviews of article deleted.');
+									})
+									.catch((error) => {
+										console.log(error);
+										res.status(500).send('Internal server error.');
+									});
+
 								Article.deleteOne({ _id: article._id })
 									.then(() => {
 										res.status(200).send('Article deleted.');
