@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 import { Article, IArticle } from '../models/Article';
 import { PublicUser } from '../models/User';
 import { Review } from '../models/Review';
-import { Role } from '../models/Role';
+import { Role, RoleName } from '../models/Role';
 
 export const configureArticleRoutes = (router: Router): Router => {
 	router.post('/', (req: Request, res: Response) => {
@@ -27,7 +27,7 @@ export const configureArticleRoutes = (router: Router): Router => {
 			.then((role) => {
 				if (!role) {
 					res.status(500).send('Internal server error');
-				} else if (role.name !== 'Author') {
+				} else if (role.name !== RoleName.AUTHOR) {
 					res.status(401).send('Unauthorized');
 				} else {
 					article
@@ -91,7 +91,7 @@ export const configureArticleRoutes = (router: Router): Router => {
 			.then((role) => {
 				if (!role) {
 					res.status(500).send('Internal server error');
-				} else if (role.name === 'Reviewer') {
+				} else if (role.name === RoleName.REVIEWER) {
 					res.status(401).send('Unauthorized');
 				} else {
 					Article.findById(req.params.articleId)
@@ -99,7 +99,7 @@ export const configureArticleRoutes = (router: Router): Router => {
 							if (!article) {
 								res.status(404).send('Not found');
 							} else {
-								if (role.name === 'Author') {
+								if (role.name === RoleName.AUTHOR) {
 									if (article.readyForReview) {
 										res.status(500).send('This article cannot be edited');
 										return;
@@ -191,7 +191,7 @@ export const configureArticleRoutes = (router: Router): Router => {
 			.then((role) => {
 				if (!role) {
 					res.status(500).send('Internal server error');
-				} else if (role.name !== 'Author') {
+				} else if (role.name !== RoleName.AUTHOR) {
 					res.status(401).send('Unauthorized');
 				} else {
 					Article.findById(req.params.articleId)
@@ -239,13 +239,13 @@ export const configureArticleRoutes = (router: Router): Router => {
 	): boolean {
 		const userId = new Types.ObjectId(user._id);
 
-		if (role === 'Author') {
+		if (role === RoleName.AUTHOR) {
 			if (article.author.equals(userId)) {
 				return true;
 			} else {
 				return false;
 			}
-		} else if (role === 'Editor') {
+		} else if (role === RoleName.EDITOR) {
 			if (article.readyForReview) {
 				return true;
 			} else {
