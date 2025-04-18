@@ -43,12 +43,12 @@ A docker indítása után a `publication` adatbázis tartalmaz néhány kezdeti 
 
 ## Kollekciók
 
-### role
+### roles
 
 - id
 - name: a felhasználószerep neve, ez lehet `Author`, `Editor` vagy `Reviewer`
 
-### user
+### users
 
 - id
 - email
@@ -62,7 +62,7 @@ Kezdtei felhasználók (jelszó nélkül):
 - editor@mailinator.com
 - reviewer@mailinator.com
 
-### article
+### articles
 
 - id
 - author: a cikk szerzőjének id-ja
@@ -71,7 +71,7 @@ Kezdtei felhasználók (jelszó nélkül):
 - reviewers: a cikk bírálóinak id-ja egy listában
 - isAccepted
 
-### review
+### reviews
 
 - id
 - text
