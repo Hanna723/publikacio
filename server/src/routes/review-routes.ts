@@ -1,74 +1,73 @@
 import { Router, Request, Response } from 'express';
-
-import { PublicUser } from '../models/User';
-import { Role } from '../models/Role';
-import { Review } from '../models/Review';
 import { HydratedDocument, Types } from 'mongoose';
-import { Article, IArticle, ArticleSchema } from '../models/Article';
+
+import { Article, IArticle } from '../models/Article';
+import { PublicUser } from '../models/User';
+import { Review } from '../models/Review';
+import { Role } from '../models/Role';
 
 export const configureReviewRoutes = (router: Router): Router => {
 	router.post('/', (req: Request, res: Response) => {
-		if (req.isAuthenticated()) {
-			const user = req.user as PublicUser;
-			const userId = new Types.ObjectId(user._id);
-
-			const text = req.body.text;
-			const isAccepted = req.body.isAccepted;
-			const article = req.body.article;
-			const reviewer = user._id;
-			const review = new Review({
-				text: text,
-				isAccepted: isAccepted,
-				article: article,
-				reviewer: reviewer,
-			});
-
-			Role.findById(user.role)
-				.then((role) => {
-					if (!role) {
-						res.status(500).send('Internal server error');
-					} else if (role.name !== 'Reviewer') {
-						res.status(401).send('Unauthorized');
-					} else {
-						Article.findById(article)
-							.then((linkedArticle) => {
-								if (!linkedArticle) {
-									res.status(500).send('Internal server error.');
-								} else if (!linkedArticle.reviewers.includes(userId)) {
-									res.status(401).send('Unauthorized');
-								} else {
-									review
-										.save()
-										.then((data) => {
-											res.status(200).send(data);
-										})
-										.catch((error) => {
-											console.log(error);
-											res.status(500).send('Internal server error');
-										});
-
-									handleArticleAcception(
-										article,
-										linkedArticle,
-										res,
-										undefined,
-										isAccepted
-									);
-								}
-							})
-							.catch((error) => {
-								console.log(error);
-								res.status(500).send('Internal server error.');
-							});
-					}
-				})
-				.catch((error) => {
-					console.log(error);
-					res.status(500).send('Internal server error.');
-				});
-		} else {
+		if (!req.isAuthenticated()) {
 			res.status(500).send('User is not logged in.');
+			return;
 		}
+
+		const user = req.user as PublicUser;
+		const userId = new Types.ObjectId(user._id);
+
+		const isAccepted = req.body.isAccepted;
+		const article = req.body.article;
+		const review = new Review({
+			text: req.body.text,
+			isAccepted: isAccepted,
+			article: article,
+			reviewer: user._id,
+		});
+
+		Role.findById(user.role)
+			.then((role) => {
+				if (!role) {
+					res.status(500).send('Internal server error');
+				} else if (role.name !== 'Reviewer') {
+					res.status(401).send('Unauthorized');
+				} else {
+					Article.findById(article)
+						.then((linkedArticle) => {
+							if (!linkedArticle) {
+								res.status(500).send('Internal server error.');
+							} else if (!linkedArticle.reviewers.includes(userId)) {
+								res.status(401).send('Unauthorized');
+							} else {
+								review
+									.save()
+									.then((data) => {
+										res.status(200).send(data);
+									})
+									.catch((error) => {
+										console.log(error);
+										res.status(500).send('Internal server error');
+									});
+
+								handleArticleAcception(
+									article,
+									linkedArticle,
+									res,
+									undefined,
+									isAccepted
+								);
+							}
+						})
+						.catch((error) => {
+							console.log(error);
+							res.status(500).send('Internal server error.');
+						});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			});
 	});
 
 	router.get('/article/:articleId', (req: Request, res: Response) => {
@@ -181,71 +180,72 @@ export const configureReviewRoutes = (router: Router): Router => {
 	});
 
 	router.post('/:reviewId', (req: Request, res: Response) => {
-		if (req.isAuthenticated()) {
-			const user = req.user as PublicUser;
-			const userId = new Types.ObjectId(user._id);
-
-			Role.findById(user.role)
-				.then((role) => {
-					if (!role) {
-						res.status(500).send('Internal server error');
-					} else if (role.name !== 'Reviewer') {
-						res.status(401).send('Unauthorized');
-					} else {
-						Review.findById(req.params.reviewId)
-							.then((review) => {
-								if (!review) {
-									res.status(404).send('Not found');
-								} else if (!review.reviewer.equals(userId)) {
-									res.status(401).send('Unauthorized');
-								} else {
-									review.text = req.body.text;
-									review.isAccepted = req.body.isAccepted;
-
-									Article.findById(review.article)
-										.then((article) => {
-											if (!article) {
-												res.status(500).send('Internal server error.');
-											} else {
-												review
-													.save()
-													.then((data) => {
-														res.status(200).send(data);
-													})
-													.catch((error) => {
-														console.log(error);
-														res.status(500).send('Internal server error');
-													});
-
-												handleArticleAcception(
-													review.article,
-													article,
-													res,
-													undefined,
-													review.isAccepted,
-													req.params.reviewId
-												);
-											}
-										})
-										.catch((error) => {
-											console.log(error);
-											res.status(500).send('Internal server error.');
-										});
-								}
-							})
-							.catch((error) => {
-								console.log(error);
-								res.status(500).send('Internal server error.');
-							});
-					}
-				})
-				.catch((error) => {
-					console.log(error);
-					res.status(500).send('Internal server error.');
-				});
-		} else {
+		if (!req.isAuthenticated()) {
 			res.status(500).send('User is not logged in.');
+			return;
 		}
+
+		const user = req.user as PublicUser;
+		const userId = new Types.ObjectId(user._id);
+
+		Role.findById(user.role)
+			.then((role) => {
+				if (!role) {
+					res.status(500).send('Internal server error');
+				} else if (role.name !== 'Reviewer') {
+					res.status(401).send('Unauthorized');
+				} else {
+					Review.findById(req.params.reviewId)
+						.then((review) => {
+							if (!review) {
+								res.status(404).send('Not found');
+							} else if (!review.reviewer.equals(userId)) {
+								res.status(401).send('Unauthorized');
+							} else {
+								review.text = req.body.text;
+								review.isAccepted = req.body.isAccepted;
+
+								Article.findById(review.article)
+									.then((article) => {
+										if (!article) {
+											res.status(500).send('Internal server error.');
+										} else {
+											review
+												.save()
+												.then((data) => {
+													res.status(200).send(data);
+												})
+												.catch((error) => {
+													console.log(error);
+													res.status(500).send('Internal server error');
+												});
+
+											handleArticleAcception(
+												review.article,
+												article,
+												res,
+												undefined,
+												review.isAccepted,
+												req.params.reviewId
+											);
+										}
+									})
+									.catch((error) => {
+										console.log(error);
+										res.status(500).send('Internal server error.');
+									});
+							}
+						})
+						.catch((error) => {
+							console.log(error);
+							res.status(500).send('Internal server error.');
+						});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			});
 	});
 
 	router.delete('/:reviewId', (req: Request, res: Response) => {
@@ -339,7 +339,6 @@ export const configureReviewRoutes = (router: Router): Router => {
 					}
 				}
 
-				console.log(acceptedReviews, allReviews, reviews.length);
 				if (allReviews === 2 && acceptedReviews === 2) {
 					article.isAccepted = true;
 				} else if (allReviews > 2 && acceptedReviews >= 2) {
@@ -352,7 +351,7 @@ export const configureReviewRoutes = (router: Router): Router => {
 
 				article
 					.save()
-					.then((data) => {
+					.then(() => {
 						console.log('Article accepted: ' + article.isAccepted);
 					})
 					.catch((error) => {

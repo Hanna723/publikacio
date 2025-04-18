@@ -18,8 +18,7 @@ export const configurePassport = (passport: PassportStatic): PassportStatic => {
 		new Strategy(
 			{ usernameField: 'email', passwordField: 'password' },
 			(email, password, done) => {
-				const query = User.findOne({ email: email });
-				query
+				User.findOne({ email: email })
 					.then((user) => {
 						if (user) {
 							user.comparePassword(password, (error, _) => {

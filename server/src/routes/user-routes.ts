@@ -9,17 +9,12 @@ export const configureUserRoutes = (
 	router: Router
 ): Router => {
 	router.post('/signup', (req: Request, res: Response) => {
-		const email = req.body.email;
-		const password = req.body.password;
-		const firstName = req.body.firstName;
-		const lastName = req.body.lastName;
-		const role = req.body.role;
 		const user = new User({
-			email: email,
-			password: password,
-			firstName: firstName,
-			lastName: lastName,
-			role: role,
+			email: req.body.email,
+			password: req.body.password,
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			role: req.body.role,
 		});
 
 		User.exists({ email: user.email })
@@ -69,17 +64,18 @@ export const configureUserRoutes = (
 	});
 
 	router.post('/logout', (req: Request, res: Response) => {
-		if (req.isAuthenticated()) {
-			req.logout((error) => {
-				if (error) {
-					console.log(error);
-					res.status(500).send('Internal server error.');
-				}
-				res.status(200).send('Successfully logged out.');
-			});
-		} else {
+		if (!req.isAuthenticated()) {
 			res.status(500).send('User is not logged in.');
+			return;
 		}
+
+		req.logout((error) => {
+			if (error) {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			}
+			res.status(200).send('Successfully logged out.');
+		});
 	});
 
 	router.get('/is-authenticated', (req: Request, res: Response) => {
@@ -91,67 +87,69 @@ export const configureUserRoutes = (
 	});
 
 	router.get('/reviewers', (req: Request, res: Response) => {
-		if (req.isAuthenticated()) {
-			const user = req.user as PublicUser;
-			if (!user.role) {
-				res.status(500).send('User has no role.');
-				return;
-			}
-
-			const roleQuery = Role.find();
-			roleQuery.then((roles) => {
-				if (roles) {
-					const userRole = roles.find((role) => role._id === user.role);
-
-					if (!userRole) {
-						res.status(500).send('Internal server error.');
-					} else if (userRole.name !== 'Editor') {
-						res.status(401).send('Unauthorized');
-					} else {
-						const reviewerRole = roles.find((role) => role.name === 'Reviewer');
-						const query = User.find();
-						query
-							.then((data) => {
-								const reviewers = data.filter(
-									(user) => user.role === reviewerRole?._id
-								);
-								res.status(200).send(reviewers);
-							})
-							.catch((error) => {
-								console.log(error);
-								res.status(500).send('Internal server error.');
-							});
-					}
-				} else {
-					res.status(500).send('Internal server error.');
-				}
-			});
-		} else {
+		if (!req.isAuthenticated()) {
 			res.status(500).send('User is not logged in.');
+			return;
 		}
+
+		const user = req.user as PublicUser;
+
+		Role.findById(user.role)
+			.then((role) => {
+				if (!role) {
+					res.status(500).send('Internal server error.');
+				} else if (role.name !== 'Editor') {
+					res.status(401).send('Unauthorized');
+				} else {
+					Role.findOne({ name: 'Reviewer' })
+						.then((reviewerRole) => {
+							if (!reviewerRole) {
+								res.status(500).send('Internal server error.');
+							} else {
+								User.find({ role: reviewerRole._id })
+									.then((reviewers) => {
+										res.status(200).send(reviewers);
+									})
+									.catch((error) => {
+										console.log(error);
+										res.status(500).send('Internal server error.');
+									});
+							}
+						})
+						.catch((error) => {
+							console.log(error);
+							res.status(500).send('Internal server error.');
+						});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			});
 	});
 
 	router.delete('/', (req: Request, res: Response) => {
-		if (req.isAuthenticated()) {
-			const user = req.user as PublicUser;
+		if (!req.isAuthenticated()) {
+			res.status(500).send('User is not logged in.');
+			return;
+		}
 
-			req.logout((error) => {
-				if (error) {
+		const user = req.user as PublicUser;
+
+		req.logout((error) => {
+			if (error) {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			}
+			User.deleteOne({ _id: user._id })
+				.then(() => {
+					res.status(200).send('User deleted.');
+				})
+				.catch((error) => {
 					console.log(error);
 					res.status(500).send('Internal server error.');
-				}
-				User.deleteOne({ _id: user._id })
-					.then(() => {
-						res.status(200).send('User deleted.');
-					})
-					.catch((error) => {
-						console.log(error);
-						res.status(500).send('Internal server error.');
-					});
-			});
-		} else {
-			res.status(500).send('User is not logged in.');
-		}
+				});
+		});
 	});
 
 	return router;

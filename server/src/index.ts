@@ -6,11 +6,11 @@ import expressSession from 'express-session';
 import mongoose from 'mongoose';
 import passport from 'passport';
 
-import { configureUserRoutes } from './routes/user-routes';
-import { configurePassport } from './passport/passport';
-import { configureRoleRoutes } from './routes/role-routes';
 import { configureArticleRoutes } from './routes/article-routes';
+import { configurePassport } from './passport/passport';
 import { configureReviewRoutes } from './routes/review-routes';
+import { configureRoleRoutes } from './routes/role-routes';
+import { configureUserRoutes } from './routes/user-routes';
 
 const app = express();
 const port = 5000;
