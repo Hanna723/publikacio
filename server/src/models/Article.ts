@@ -6,16 +6,16 @@ export interface IArticle extends Document {
 	content: string;
 	readyForReview: boolean;
 	reviewers: Types.ObjectId[];
-	isAccepted: boolean;
+	isAccepted?: boolean;
 }
 
-const ArticleSchema: Schema<IArticle> = new mongoose.Schema({
+export const ArticleSchema: Schema<IArticle> = new mongoose.Schema({
 	author: { type: Schema.Types.ObjectId, required: true },
 	title: { type: String, required: true },
 	content: { type: String, required: false },
 	readyForReview: { type: Boolean, required: true },
 	reviewers: { type: [Schema.Types.ObjectId], required: true },
-	isAccepted: { type: Boolean, required: true },
+	isAccepted: { type: Boolean, required: false },
 });
 
 export const Article: Model<IArticle> = mongoose.model<IArticle>('articles', ArticleSchema);

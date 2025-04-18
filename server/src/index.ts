@@ -10,6 +10,7 @@ import { configureUserRoutes } from './routes/user-routes';
 import { configurePassport } from './passport/passport';
 import { configureRoleRoutes } from './routes/role-routes';
 import { configureArticleRoutes } from './routes/article-routes';
+import { configureReviewRoutes } from './routes/review-routes';
 
 const app = express();
 const port = 5000;
@@ -57,6 +58,7 @@ app.use(passport.session());
 configurePassport(passport);
 
 app.use('/article', configureArticleRoutes(express.Router()));
+app.use('/review', configureReviewRoutes(express.Router()));
 app.use('/roles', configureRoleRoutes(express.Router()));
 app.use('/user', configureUserRoutes(passport, express.Router()));
 
