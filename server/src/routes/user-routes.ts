@@ -95,7 +95,7 @@ export const configureUserRoutes = (
 		if (req.isAuthenticated()) {
 			res.status(200).send(true);
 		} else {
-			res.status(500).send(false);
+			res.status(200).send(false);
 		}
 	});
 

@@ -1,0 +1,4 @@
+<mat-toolbar>
+    <span>Publication</span>
+    <button mat-button *ngIf="isAuthenticated" (click)="navigate('/auth/login')">Logout</button>
+</mat-toolbar>
