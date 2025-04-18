@@ -12,6 +12,11 @@ export const configureUserRoutes = (
 	router: Router
 ): Router => {
 	router.post('/signup', (req: Request, res: Response) => {
+		if (req.isAuthenticated()) {
+			res.status(500).send('User already logged in.');
+			return;
+		}
+		
 		const user = new User({
 			email: req.body.email,
 			password: req.body.password,
@@ -43,6 +48,11 @@ export const configureUserRoutes = (
 	});
 
 	router.post('/login', (req: Request, res: Response, next: NextFunction) => {
+		if (req.isAuthenticated()) {
+			res.status(500).send('User already logged in.');
+			return;
+		}
+
 		passport.authenticate(
 			'local',
 			(error: string | null, user: typeof User) => {
@@ -223,6 +233,79 @@ export const configureUserRoutes = (
 					res.status(500).send('Internal server error.');
 				});
 		});
+	});
+
+	router.post('/update', (req: Request, res: Response) => {
+		if (!req.isAuthenticated()) {
+			res.status(500).send('User is not logged in.');
+			return;
+		}
+
+		const publicUser = req.user as PublicUser;
+
+		User.findById(publicUser._id)
+			.then((user) => {
+				if (!user) {
+					res.status(500).send('Internal server error');
+				} else {
+					user.firstName = req.body.lastName;
+					user.lastName = req.body.lastName;
+
+					user
+						.save()
+						.then((data) => {
+							res.status(200).send(data);
+						})
+						.catch((error) => {
+							console.log(error);
+							res.status(500).send('Internal server error');
+						});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			});
+	});
+
+	router.post('/update-password', (req: Request, res: Response) => {
+		if (!req.isAuthenticated()) {
+			res.status(500).send('User is not logged in.');
+			return;
+		}
+
+		const publicUser = req.user as PublicUser;
+
+		User.findById(publicUser._id)
+			.then((user) => {
+				if (!user) {
+					res.status(500).send('Internal server error');
+				} else {
+					user.comparePassword(req.body.password, (error, isMatch) => {
+						if (error) {
+							console.log(error);
+							res.status(500).send(error);
+						} else if (!isMatch) {
+							res.status(500).send('Incorrect password');
+						} else {
+							user.password = req.body.newPassword;
+							user
+								.save()
+								.then((data) => {
+									res.status(200).send(data);
+								})
+								.catch((error) => {
+									console.log(error);
+									res.status(500).send('Internal server error');
+								});
+						}
+					});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			});
 	});
 
 	function handleArticleAcception(

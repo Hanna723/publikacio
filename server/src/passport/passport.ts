@@ -21,8 +21,8 @@ export const configurePassport = (passport: PassportStatic): PassportStatic => {
 				User.findOne({ email: email })
 					.then((user) => {
 						if (user) {
-							user.comparePassword(password, (error, _) => {
-								if (error) {
+							user.comparePassword(password, (error, isMatch) => {
+								if (error || !isMatch) {
 									done('Incorrect username or password.');
 								} else {
 									let publicUser: any = {
