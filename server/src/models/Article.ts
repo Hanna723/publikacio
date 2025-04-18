@@ -18,4 +18,7 @@ export const ArticleSchema: Schema<IArticle> = new mongoose.Schema({
 	isAccepted: { type: Boolean, required: false },
 });
 
-export const Article: Model<IArticle> = mongoose.model<IArticle>('articles', ArticleSchema);
+export const Article: Model<IArticle> = mongoose.model<IArticle>(
+	'articles',
+	ArticleSchema
+);

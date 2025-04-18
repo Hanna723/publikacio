@@ -26,13 +26,13 @@ export const configurePassport = (passport: PassportStatic): PassportStatic => {
 								if (error) {
 									done('Incorrect username or password.');
 								} else {
-                                    let publicUser: any = {
-                                        _id: user._id,
-                                        email: user.email,
-                                        firstName: user.firstName,
-                                        lastName: user.lastName,
-                                        role: user.role
-                                    }
+									let publicUser: any = {
+										_id: user._id,
+										email: user.email,
+										firstName: user.firstName,
+										lastName: user.lastName,
+										role: user.role,
+									};
 									done(null, publicUser);
 								}
 							});
