@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { LoginComponent } from './components/auth/login/login.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
 
 @Component({
   imports: [HeaderComponent, RouterOutlet],
@@ -17,8 +18,13 @@ export class AppComponent {
     if (componentRef instanceof LoginComponent) {
       componentRef.loginEvent.subscribe(() => {
         this.header.isAuthenticated = true;
-      })
+      });
     }
-    
+
+    if (componentRef instanceof ProfileComponent) {
+      componentRef.deleteEvent.subscribe(() => {
+        this.header.isAuthenticated = false;
+      });
+    }
   }
 }

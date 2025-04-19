@@ -248,11 +248,10 @@ export const configureUserRoutes = (
 				if (!user) {
 					res.status(500).send('Internal server error');
 				} else {
-					user.firstName = req.body.lastName;
-					user.lastName = req.body.lastName;
-
-					user
-						.save()
+					User.updateOne(
+						{ _id: user._id },
+						{ firstName: req.body.firstName, lastName: req.body.lastName }
+					)
 						.then((data) => {
 							res.status(200).send(data);
 						})
@@ -286,7 +285,7 @@ export const configureUserRoutes = (
 							console.log(error);
 							res.status(500).send(error);
 						} else if (!isMatch) {
-							res.status(500).send('Incorrect password');
+							res.status(400).send('Incorrect password');
 						} else {
 							user.password = req.body.newPassword;
 							user
@@ -300,6 +299,69 @@ export const configureUserRoutes = (
 								});
 						}
 					});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			});
+	});
+
+	router.get('/', (req: Request, res: Response) => {
+		if (!req.isAuthenticated()) {
+			res.status(500).send('User is not logged in.');
+			return;
+		}
+
+		const user = req.user as PublicUser;
+
+		Role.findById(user.role)
+			.then((role) => {
+				if (!role) {
+					res.status(500).send('Internal server error.');
+				} else {
+					res.status(200).send({
+						id: user._id,
+						firstName: user.firstName,
+						lastName: user.lastName,
+						role: role.name,
+					});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			});
+	});
+
+	router.get('/:userId', (req: Request, res: Response) => {
+		if (!req.isAuthenticated()) {
+			res.status(500).send('User is not logged in.');
+			return;
+		}
+
+		User.findById(req.params.userId)
+			.then((user) => {
+				if (!user) {
+					res.status(404).send('Wrong ID');
+				} else {
+					Role.findById(user.role)
+						.then((role) => {
+							if (!role) {
+								res.status(500).send('Internal server error.');
+							} else {
+								res.status(200).send({
+									id: user._id,
+									firstName: user.firstName,
+									lastName: user.lastName,
+									role: role.name,
+								});
+							}
+						})
+						.catch((error) => {
+							console.log(error);
+							res.status(500).send('Internal server error.');
+						});
 				}
 			})
 			.catch((error) => {

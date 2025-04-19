@@ -35,6 +35,38 @@ a:hover {
   margin-top: 24px;
 }
 
+mat-card {
+  width: 500px;
+  margin: auto;
+  align-items: center;
+  display: flex;
+
+  mat-card-header {
+    margin-top: 24px;
+  }
+
+  mat-card-content {
+    width: 300px;
+    margin: 24px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+  }
+
+  mat-form-field {
+    width: 100%;
+    padding-bottom: 12px;
+  }
+
+  button {
+    width: max-content;
+    margin: auto;
+  }
+}
+
 html,
 body {
   height: 100%;
