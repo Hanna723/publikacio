@@ -56,7 +56,7 @@ export class LoginComponent {
       .subscribe({
         next: (user) => {
           this.loginEvent.emit();
-          this.router.navigateByUrl('/articles');
+          this.router.navigateByUrl('/article/list');
         },
         error: (error) => {
           if (error.status == 400) {
