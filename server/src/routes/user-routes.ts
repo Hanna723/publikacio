@@ -285,7 +285,7 @@ export const configureUserRoutes = (
 							console.log(error);
 							res.status(500).send(error);
 						} else if (!isMatch) {
-							res.status(500).send('Incorrect password');
+							res.status(400).send('Incorrect password');
 						} else {
 							user.password = req.body.newPassword;
 							user
