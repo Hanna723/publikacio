@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { LoginComponent } from './components/auth/login/login.component';
 
 @Component({
   imports: [HeaderComponent, RouterOutlet],
@@ -10,4 +11,14 @@ import { HeaderComponent } from './shared/components/header/header.component';
 })
 export class AppComponent {
   title = 'publication';
+  @ViewChild('header') header!: HeaderComponent;
+
+  onComponentChange(componentRef: any): void {
+    if (componentRef instanceof LoginComponent) {
+      componentRef.loginEvent.subscribe(() => {
+        this.header.isAuthenticated = true;
+      })
+    }
+    
+  }
 }

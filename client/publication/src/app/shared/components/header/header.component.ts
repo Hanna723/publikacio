@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -13,17 +13,24 @@ import { Router, RouterLink } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isAuthenticated: boolean | undefined;
+  @Input() isAuthenticated: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService
-      .checkAuth()
-      .subscribe((isAuthenticated) => (this.isAuthenticated = isAuthenticated));
+    this.authService.checkAuth().subscribe((isAuthenticated) => {
+      this.isAuthenticated = isAuthenticated;
+    });
   }
 
-  navigate(to: string) {
-    this.router.navigateByUrl;
+  navigate(to: string): void {
+    this.router.navigateByUrl(to);
+  }
+
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.router.navigateByUrl('/auth/login');
+      this.isAuthenticated = false;
+    });
   }
 }

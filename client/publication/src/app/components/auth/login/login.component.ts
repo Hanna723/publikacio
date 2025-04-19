@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -32,6 +32,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  @Output() loginEvent = new EventEmitter();
   hide = true;
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -53,6 +54,7 @@ export class LoginComponent {
       )
       .subscribe({
         next: (user) => {
+          this.loginEvent.emit();
           this.router.navigateByUrl('/articles');
         },
         error: (error) => {
