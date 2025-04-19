@@ -6,6 +6,7 @@
   }
 }
 
-button {
-  margin: auto;
+div[mat-dialog-actions] {
+  display: flex;
+  justify-content: space-evenly;
 }

@@ -4,9 +4,15 @@
   </mat-dialog-content>
   <div mat-dialog-actions>
     <button
+      *ngIf="data.button"
+      mat-raised-button
+      (click)="onCancel()"
+    >
+      {{ data.button }}
+    </button>
+    <button
       *ngIf="data.submitButton"
       mat-flat-button
-      color="accent"
       (click)="onSubmit()"
     >
       {{ data.submitButton }}

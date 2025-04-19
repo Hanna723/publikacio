@@ -29,7 +29,10 @@ export class UserService {
   }
 
   deleteUser() {
-    return this.http.delete(this.URL_PREFIX, { withCredentials: true });
+    return this.http.delete(this.URL_PREFIX, {
+      withCredentials: true,
+      responseType: 'text',
+    });
   }
 
   updateUserName(firstName: string, lastName: string) {
