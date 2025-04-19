@@ -4,7 +4,7 @@ import { HydratedDocument, Types } from 'mongoose';
 import { Article, IArticle } from '../models/Article';
 import { PublicUser } from '../models/User';
 import { Review } from '../models/Review';
-import { Role } from '../models/Role';
+import { Role, RoleName } from '../models/Role';
 
 export const configureReviewRoutes = (router: Router): Router => {
 	router.post('/', (req: Request, res: Response) => {
@@ -29,7 +29,7 @@ export const configureReviewRoutes = (router: Router): Router => {
 			.then((role) => {
 				if (!role) {
 					res.status(500).send('Internal server error');
-				} else if (role.name !== 'Reviewer') {
+				} else if (role.name !== RoleName.REVIEWER) {
 					res.status(401).send('Unauthorized');
 				} else {
 					Article.findById(article)
@@ -86,9 +86,9 @@ export const configureReviewRoutes = (router: Router): Router => {
 				} else {
 					Review.find({ article: req.params.articleId })
 						.then((reviews) => {
-							if (role.name === 'Editor') {
+							if (role.name === RoleName.EDITOR) {
 								res.status(200).send(reviews);
-							} else if (role.name === 'Reviewer') {
+							} else if (role.name === RoleName.REVIEWER) {
 								const reviewsWithAccess = reviews.filter((review) =>
 									review.reviewer.equals(userId)
 								);
@@ -141,13 +141,13 @@ export const configureReviewRoutes = (router: Router): Router => {
 							if (!review) {
 								res.status(404).send('Not found');
 							} else {
-								if (role.name === 'Reviewer') {
+								if (role.name === RoleName.REVIEWER) {
 									if (!review.reviewer.equals(userId)) {
 										res.status(401).send('Unauthorized');
 									} else {
 										res.status(200).send(review);
 									}
-								} else if (role.name === 'Editor') {
+								} else if (role.name === RoleName.EDITOR) {
 									res.status(200).send(review);
 								} else {
 									Article.findById(review.article)
@@ -192,7 +192,7 @@ export const configureReviewRoutes = (router: Router): Router => {
 			.then((role) => {
 				if (!role) {
 					res.status(500).send('Internal server error');
-				} else if (role.name !== 'Reviewer') {
+				} else if (role.name !== RoleName.REVIEWER) {
 					res.status(401).send('Unauthorized');
 				} else {
 					Review.findById(req.params.reviewId)
@@ -261,7 +261,7 @@ export const configureReviewRoutes = (router: Router): Router => {
 			.then((role) => {
 				if (!role) {
 					res.status(500).send('Internal server error');
-				} else if (role.name !== 'Reviewer') {
+				} else if (role.name !== RoleName.REVIEWER) {
 					res.status(401).send('Unauthorized');
 				} else {
 					Review.findById(req.params.reviewId)

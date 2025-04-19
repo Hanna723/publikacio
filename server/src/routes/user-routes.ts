@@ -5,7 +5,7 @@ import { PassportStatic } from 'passport';
 import { Article, IArticle } from '../models/Article';
 import { PublicUser, User } from '../models/User';
 import { Review } from '../models/Review';
-import { Role } from '../models/Role';
+import { Role, RoleName } from '../models/Role';
 
 export const configureUserRoutes = (
 	passport: PassportStatic,
@@ -16,7 +16,7 @@ export const configureUserRoutes = (
 			res.status(500).send('User already logged in.');
 			return;
 		}
-		
+
 		const user = new User({
 			email: req.body.email,
 			password: req.body.password,
@@ -28,7 +28,7 @@ export const configureUserRoutes = (
 		User.exists({ email: user.email })
 			.then((existingUser) => {
 				if (existingUser) {
-					res.status(500).send('Email already in use');
+					res.status(400).send('Email already in use');
 				} else {
 					user
 						.save()
@@ -57,7 +57,7 @@ export const configureUserRoutes = (
 			'local',
 			(error: string | null, user: typeof User) => {
 				if (error) {
-					res.status(500).send(error);
+					res.status(400).send(error);
 				} else {
 					if (!user) {
 						res.status(400).send('User not found.');
@@ -95,7 +95,7 @@ export const configureUserRoutes = (
 		if (req.isAuthenticated()) {
 			res.status(200).send(true);
 		} else {
-			res.status(500).send(false);
+			res.status(200).send(false);
 		}
 	});
 
@@ -111,10 +111,10 @@ export const configureUserRoutes = (
 			.then((role) => {
 				if (!role) {
 					res.status(500).send('Internal server error.');
-				} else if (role.name !== 'Editor') {
+				} else if (role.name !== RoleName.EDITOR) {
 					res.status(401).send('Unauthorized');
 				} else {
-					Role.findOne({ name: 'Reviewer' })
+					Role.findOne({ name: RoleName.REVIEWER })
 						.then((reviewerRole) => {
 							if (!reviewerRole) {
 								res.status(500).send('Internal server error.');
@@ -161,7 +161,7 @@ export const configureUserRoutes = (
 					if (!role) {
 						res.status(500).send('Internal server error.');
 					} else {
-						if (role.name === 'Author') {
+						if (role.name === RoleName.AUTHOR) {
 							Article.find({ author: userId })
 								.then((articles) => {
 									articles.forEach((article) => {
@@ -188,7 +188,7 @@ export const configureUserRoutes = (
 									console.log(error);
 									res.status(500).send('Internal server error.');
 								});
-						} else if (role.name === 'Reviewer') {
+						} else if (role.name === RoleName.REVIEWER) {
 							Review.deleteMany({ reviewer: userId })
 								.then(() => {
 									console.log('Reviews of reviewer deleted.');

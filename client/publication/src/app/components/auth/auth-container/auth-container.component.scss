@@ -1,0 +1,15 @@
+mat-card {
+    width: 500px;
+    margin: auto;
+    align-items: center;
+    display: flex;
+
+    mat-card-header {
+        margin-top: 24px;
+    }
+
+    mat-card-content {
+        width: 300px;
+        margin: 24px;
+    }
+}

@@ -1,0 +1,6 @@
+<mat-toolbar>
+    <span>Publication</span>
+    <button mat-button *ngIf="isAuthenticated" (click)="navigate('/article/list')">Articles</button>
+    <button mat-button *ngIf="isAuthenticated" (click)="navigate('/user/profile')">Profile</button>
+    <button mat-button *ngIf="isAuthenticated" (click)="logout()">Logout</button>
+</mat-toolbar>

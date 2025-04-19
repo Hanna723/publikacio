@@ -57,7 +57,7 @@ A docker indítása után a `publication` adatbázis tartalmaz néhány kezdeti 
 - lastName
 - role: a szerep id-ja, amibe a felhasználó tartozik
 
-Kezdtei felhasználók (jelszó nélkül):
+Kezdtei felhasználók (jelszó: password):
 - author@mailinator.com
 - editor@mailinator.com
 - reviewer@mailinator.com

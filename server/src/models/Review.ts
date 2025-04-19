@@ -10,7 +10,7 @@ export interface IReview extends Document {
 const ReviewSchema: Schema<IReview> = new mongoose.Schema({
 	text: { type: String, required: true },
 	isAccepted: { type: Boolean, required: true },
-	article: { type: Schema.Types.ObjectId, required: false },
+	article: { type: Schema.Types.ObjectId, required: true },
 	reviewer: { type: Schema.Types.ObjectId, required: true },
 });
 
