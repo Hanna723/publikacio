@@ -1,0 +1,15 @@
+<div class="container">
+  <div mat-dialog-title *ngIf="data.title">{{ data.title }}</div>
+  <mat-dialog-content *ngIf="data.text" [innerHtml]="data.text">
+  </mat-dialog-content>
+  <div mat-dialog-actions>
+    <button
+      *ngIf="data.submitButton"
+      mat-flat-button
+      color="accent"
+      (click)="onSubmit()"
+    >
+      {{ data.submitButton }}
+    </button>
+  </div>
+</div>

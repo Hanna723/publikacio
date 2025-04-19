@@ -248,11 +248,10 @@ export const configureUserRoutes = (
 				if (!user) {
 					res.status(500).send('Internal server error');
 				} else {
-					user.firstName = req.body.lastName;
-					user.lastName = req.body.lastName;
-
-					user
-						.save()
+					User.updateOne(
+						{ _id: user._id },
+						{ firstName: req.body.firstName, lastName: req.body.lastName }
+					)
 						.then((data) => {
 							res.status(200).send(data);
 						})

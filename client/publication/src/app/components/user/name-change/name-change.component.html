@@ -17,6 +17,9 @@
         <mat-error *ngIf="nameForm.controls['lastName'].errors?.['required']"
           >Please enter your last name!</mat-error
         >
+        <mat-error *ngIf="nameForm.errors?.['unknown']"
+          >Unknown error</mat-error
+        >
       </mat-form-field>
       <button mat-flat-button type="submit" [disabled]="!nameForm.valid">
         Save

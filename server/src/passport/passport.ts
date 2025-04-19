@@ -8,9 +8,15 @@ export const configurePassport = (passport: PassportStatic): PassportStatic => {
 		done(null, user);
 	});
 
-	passport.deserializeUser((user: Express.User, done) => {
-		console.log('user is deserialized.');
-		done(null, user);
+	passport.deserializeUser((id: string, done) => {
+		User.findById(id)
+			.then((user) => {
+				console.log('user is deserialized.');
+				done(null, user);
+			})
+			.catch((error) => {
+				done(error);
+			});
 	});
 
 	passport.use(
