@@ -308,6 +308,69 @@ export const configureUserRoutes = (
 			});
 	});
 
+	router.get('/', (req: Request, res: Response) => {
+		if (!req.isAuthenticated()) {
+			res.status(500).send('User is not logged in.');
+			return;
+		}
+
+		const user = req.user as PublicUser;
+
+		Role.findById(user.role)
+			.then((role) => {
+				if (!role) {
+					res.status(500).send('Internal server error.');
+				} else {
+					res.status(200).send({
+						id: user._id,
+						firstName: user.firstName,
+						lastName: user.lastName,
+						role: role.name,
+					});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			});
+	});
+
+	router.get('/:userId', (req: Request, res: Response) => {
+		if (!req.isAuthenticated()) {
+			res.status(500).send('User is not logged in.');
+			return;
+		}
+
+		User.findById(req.params.userId)
+			.then((user) => {
+				if (!user) {
+					res.status(404).send('Wrong ID');
+				} else {
+					Role.findById(user.role)
+						.then((role) => {
+							if (!role) {
+								res.status(500).send('Internal server error.');
+							} else {
+								res.status(200).send({
+									id: user._id,
+									firstName: user.firstName,
+									lastName: user.lastName,
+									role: role.name,
+								});
+							}
+						})
+						.catch((error) => {
+							console.log(error);
+							res.status(500).send('Internal server error.');
+						});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send('Internal server error.');
+			});
+	});
+
 	function handleArticleAcception(
 		articleId: Types.ObjectId,
 		article: HydratedDocument<IArticle>,
