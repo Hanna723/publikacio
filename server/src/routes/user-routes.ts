@@ -57,7 +57,7 @@ export const configureUserRoutes = (
 			'local',
 			(error: string | null, user: typeof User) => {
 				if (error) {
-					res.status(500).send(error);
+					res.status(400).send(error);
 				} else {
 					if (!user) {
 						res.status(400).send('User not found.');
