@@ -1,1 +1,77 @@
-<app-auth-container title="Signup"></app-auth-container>
+<app-auth-container title="Signup"
+  ><form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput required formControlName="email" />
+      <mat-error *ngIf="signupForm.controls['email'].errors?.['required']"
+        >Please enter an email!</mat-error
+      >
+      <mat-error *ngIf="signupForm.controls['email'].errors?.['email']"
+        >Not a valid email!</mat-error
+      >
+      <mat-error *ngIf="signupForm.controls['email'].errors?.['used']"
+        >Email already in use!</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        required
+        formControlName="password"
+        minlength="8"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+        tabindex="-1"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      <mat-error *ngIf="signupForm.controls['password'].errors?.['required']"
+        >Please enter a password!</mat-error
+      >
+      <mat-error *ngIf="signupForm.controls['password'].errors?.['minlength']"
+        >Must be at least 8 characters long!</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>First name</mat-label>
+      <input matInput required formControlName="firstName" />
+      <mat-error *ngIf="signupForm.controls['firstName'].errors?.['required']"
+        >Please enter your first name!</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Last name</mat-label>
+      <input matInput required formControlName="lastName" />
+      <mat-error *ngIf="signupForm.controls['lastName'].errors?.['required']"
+        >Please enter your last name!</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Role</mat-label>
+      <mat-select required formControlName="role">
+        @for (role of roles; track role) {
+        <mat-option [value]="role._id">{{ role.name }}</mat-option>
+        }
+      </mat-select>
+      <mat-error *ngIf="signupForm.controls['role'].errors?.['required']"
+        >Please choose a role!</mat-error
+      >
+      <mat-error *ngIf="signupForm.errors?.['unknown']"
+        >Unexpected error</mat-error
+      >
+    </mat-form-field>
+    <button mat-flat-button type="submit" [disabled]="!signupForm.valid">
+      Signup
+    </button>
+  </form>
+  <div class="auth-nav">
+    Already have an account? <a routerLink="/auth/login">Login</a>
+  </div>
+</app-auth-container>

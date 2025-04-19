@@ -21,6 +21,20 @@ html {
   );
 }
 
+a {
+  color: var(--mat-sys-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.auth-nav {
+  text-align: center;
+  margin-top: 24px;
+}
+
 html,
 body {
   height: 100%;

@@ -28,7 +28,7 @@ export const configureUserRoutes = (
 		User.exists({ email: user.email })
 			.then((existingUser) => {
 				if (existingUser) {
-					res.status(500).send('Email already in use');
+					res.status(400).send('Email already in use');
 				} else {
 					user
 						.save()
