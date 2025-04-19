@@ -1,5 +1,5 @@
 export interface Review {
-    id: string,
+    _id?: string,
     text: string,
     isAccepted: boolean,
     article: string,
