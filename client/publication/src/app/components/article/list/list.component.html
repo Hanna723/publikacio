@@ -1,1 +1,27 @@
-<p>list works!</p>
+<table mat-table [dataSource]="articles" *ngIf="articles && articleNum === articles.length && articleNum > 0">
+  <ng-container matColumnDef="author">
+    <th mat-header-cell *matHeaderCellDef>Author</th>
+    <td mat-cell *matCellDef="let element">{{ element.author }}</td>
+  </ng-container>
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>Title</th>
+    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+  </ng-container>
+  <ng-container matColumnDef="readyForReview">
+    <th mat-header-cell *matHeaderCellDef>Ready for review</th>
+    <td mat-cell *matCellDef="let element">{{ element.readyForReview }}</td>
+  </ng-container>
+  <ng-container matColumnDef="reviewers">
+    <th mat-header-cell *matHeaderCellDef>Reviewers</th>
+    <td mat-cell *matCellDef="let element">{{ element.reviewers }}</td>
+  </ng-container>
+  <ng-container matColumnDef="isAccepted">
+    <th mat-header-cell *matHeaderCellDef>Accepted</th>
+    <td mat-cell *matCellDef="let element">{{ element.isAccepted }}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+<div *ngIf="articles && articleNum === articles.length && articleNum === 0">
+    No articles yet
+</div>
