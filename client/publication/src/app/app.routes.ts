@@ -83,7 +83,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: 'new',
+        path: 'new/:id',
         loadComponent: () =>
           import('./components/review/edit/edit.component').then(
             (c) => c.EditComponent

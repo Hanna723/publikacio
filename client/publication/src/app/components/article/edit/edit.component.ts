@@ -45,7 +45,6 @@ export class EditComponent implements OnInit {
     readyForReview: new FormControl(false, []),
   });
   title: string = 'New article';
-  id?: string;
   article?: Article;
 
   constructor(
@@ -57,7 +56,7 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUser().subscribe((user) => {
       if (user.role !== RoleName.AUTHOR) {
-        this.router.navigateByUrl('article/list');
+        this.router.navigateByUrl('/article/list');
       }
     });
 

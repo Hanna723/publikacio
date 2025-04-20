@@ -77,7 +77,7 @@ export class DetailComponent implements OnInit {
         return;
       }
 
-      this.articleService.delete(this.article?._id).subscribe(() => {
+      this.articleService.delete(this.article._id).subscribe(() => {
         this.router.navigateByUrl('/article/list');
       });
     });

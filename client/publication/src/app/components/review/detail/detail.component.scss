@@ -1,0 +1,31 @@
+mat-card {
+  width: 800px;
+
+  mat-card-content {
+    width: 700px;
+  }
+
+  mat-card-actions {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding: 16px 40px 0 40px;
+
+    button {
+      margin: 0;
+    }
+
+    div {
+      display: flex;
+      column-gap: 8px;
+    }
+  }
+
+  mat-card-header {
+    margin-top: 0;
+  }
+}
+
+.notFound {
+  text-align: center;
+}

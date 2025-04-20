@@ -56,7 +56,7 @@ export class ListComponent implements OnInit {
           const tableReview: TableReview = {
             _id: review._id,
             reviewer: reviewer.firstName + ' ' + reviewer.lastName,
-            text: review.text,
+            text: this.formatReviewText(review.text),
             isAccepted: review.isAccepted,
           };
           this.tableReviews = [...this.tableReviews, tableReview];
@@ -65,8 +65,16 @@ export class ListComponent implements OnInit {
     });
   }
 
+  formatReviewText(text: string): string {
+    if (text.length < 50) {
+      return text;
+    }
+
+    return text.slice(0, 50) + '...';
+  }
+
   newReview(): void {
-    this.router.navigateByUrl('/review/new');
+    this.router.navigateByUrl('/review/new/' + this.articleId);
   }
 
   navigateToReview(review: TableReview): void {

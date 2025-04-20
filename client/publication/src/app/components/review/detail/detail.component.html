@@ -1,1 +1,26 @@
-<p>detail works!</p>
+<mat-card appearance="outlined" *ngIf="review">
+  <mat-card-actions *ngIf="user?._id === review.reviewer">
+    <div>
+      <button mat-mini-fab (click)="editReview()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-mini-fab (click)="deleteReview()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-card-actions>
+  <mat-card-header>
+    <mat-card-title
+      >Review for
+      <a [routerLink]="'/article/' + review.article">{{
+        articleTitle
+      }}</a></mat-card-title
+    >
+    <mat-card-subtitle>By: {{ reviewerName }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    {{ review.text }}
+  </mat-card-content>
+</mat-card>
+<div *ngIf="!review" class="notFound">Not found</div>
+<div class="end"></div>

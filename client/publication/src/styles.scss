@@ -24,6 +24,12 @@ html {
 td {
   overflow: hidden;
   max-width: 200px;
+  max-height: 52px;
+}
+
+mat-row {
+  overflow: hidden;
+  max-height: 52px;
 }
 
 a {

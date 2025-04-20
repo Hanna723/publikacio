@@ -32,7 +32,7 @@ export class ReviewService {
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 
-    return this.http.post(this.URL_PREFIX, body, {
+    return this.http.post<Review>(this.URL_PREFIX, body, {
       headers: headers,
       withCredentials: true,
     });
@@ -47,7 +47,7 @@ export class ReviewService {
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 
-    return this.http.post(this.URL_PREFIX + review._id, body, {
+    return this.http.post<Review>(this.URL_PREFIX + review._id, body, {
       headers: headers,
       withCredentials: true,
     });
