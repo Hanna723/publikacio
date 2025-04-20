@@ -47,7 +47,6 @@ export class ReviewerDialogComponent implements OnInit {
           reviewer._id && !this.data.selectedReviewers.includes(reviewer._id)
       );
       this.reviewerCount = this.reviewers.length;
-      console.log(this.reviewerCount)
     });
   }
 

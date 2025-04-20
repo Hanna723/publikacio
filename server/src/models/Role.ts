@@ -13,7 +13,7 @@ const RoleSchema: Schema<IRole> = new mongoose.Schema({
 export const Role: Model<IRole> = mongoose.model<IRole>('roles', RoleSchema);
 
 export enum RoleName {
-    AUTHOR = 'Author',
-    REVIEWER = 'Reviewer',
-    EDITOR = 'Editor'
+	AUTHOR = 'Author',
+	REVIEWER = 'Reviewer',
+	EDITOR = 'Editor',
 }

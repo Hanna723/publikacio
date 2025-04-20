@@ -15,7 +15,7 @@ import {
 })
 export class DialogComponent {
   @Output() submitEvent = new EventEmitter();
-  
+
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

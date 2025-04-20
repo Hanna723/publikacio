@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
+
 import { Review } from 'src/app/shared/models/Review';
 import { RoleName } from 'src/app/shared/models/Role';
 import { ReviewService } from 'src/app/shared/services/review.service';
@@ -37,7 +38,6 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.userRole);
     this.isReviewer = this.userRole === RoleName.REVIEWER;
 
     if (!this.articleId) {

@@ -11,9 +11,7 @@
         }
       </mat-select>
     </mat-form-field>
-    <div *ngIf="reviewerCount == 0">
-      There are no more reviewers available.
-    </div>
+    <div *ngIf="reviewerCount == 0">There are no more reviewers available.</div>
   </mat-dialog-content>
   <div mat-dialog-actions>
     <button mat-raised-button (click)="onCancel()">Cancel</button>
