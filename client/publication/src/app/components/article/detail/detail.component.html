@@ -1,1 +1,17 @@
-<p>detail works!</p>
+<mat-card appearance="outlined" *ngIf="article">
+  <mat-card-actions>
+    <mat-chip-set>
+      <mat-chip *ngIf="article.readyForReview">Ready for review</mat-chip>
+      <mat-chip *ngIf="article.isAccepted">Accepted</mat-chip>
+      <mat-chip *ngIf="article.isAccepted === false">Rejected</mat-chip>
+    </mat-chip-set>
+  </mat-card-actions>
+  <mat-card-header>
+    <mat-card-title>{{ article.title }}</mat-card-title>
+    <mat-card-subtitle>By: {{ authorName }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    {{ article.content }}
+  </mat-card-content>
+</mat-card>
+<div></div>

@@ -1,0 +1,23 @@
+mat-card {
+  width: 800px;
+
+  mat-card-content {
+    width: 700px;
+  }
+
+  mat-card-actions {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-right: 40px;
+    margin-top: 16px;
+  }
+
+  mat-card-header {
+    margin-top: 0;
+  }
+}
+
+div {
+  height: 100px;
+}
