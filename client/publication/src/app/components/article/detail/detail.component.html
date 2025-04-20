@@ -32,6 +32,7 @@
 </mat-card>
 <app-reviewer-list
   *ngIf="article"
+  [article]="article"
   [reviewers]="article.reviewers"
   [userRole]="user?.role"
 ></app-reviewer-list>

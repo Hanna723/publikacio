@@ -121,7 +121,14 @@ export const configureUserRoutes = (
 							} else {
 								User.find({ role: reviewerRole._id })
 									.then((reviewers) => {
-										res.status(200).send(reviewers);
+										const publicReviewers = reviewers.map(reviewer => {
+											return {
+												_id: reviewer._id,
+												firstName: reviewer.firstName,
+												lastName: reviewer.lastName,
+											}
+										})
+										res.status(200).send(publicReviewers);
 									})
 									.catch((error) => {
 										console.log(error);

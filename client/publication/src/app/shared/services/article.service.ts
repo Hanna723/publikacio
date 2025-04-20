@@ -43,6 +43,9 @@ export class ArticleService {
     body.set('title', article.title);
     body.set('content', article.content || '');
     body.set('readyForReview', JSON.stringify(article.readyForReview));
+    article.reviewers.forEach((reviewer) => {
+      body.append('reviewers', reviewer);
+    });
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
