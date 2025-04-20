@@ -1,3 +1,11 @@
 div {
-    text-align: center;
+  text-align: center;
+}
+
+tr[mat-row] {
+  cursor: pointer;
+}
+
+tr[mat-row]:hover {
+    background-color: var(--mat-sys-surface-variant);
 }

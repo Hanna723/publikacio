@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 import { ArticleService } from 'src/app/shared/services/article.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -33,7 +34,8 @@ export class ListComponent implements OnInit {
 
   constructor(
     private articleService: ArticleService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -54,9 +56,12 @@ export class ListComponent implements OnInit {
           };
 
           this.articles.push(tableArticle);
-          console.log(tableArticle);
         });
       });
     });
+  }
+
+  navigateToArticle(article: TableArticle) {
+    this.router.navigateByUrl('/article/' + article._id);
   }
 }

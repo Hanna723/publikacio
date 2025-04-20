@@ -38,6 +38,31 @@ export const routes: Routes = [
             (c) => c.ListComponent
           ),
       },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('./components/article/detail/detail.component').then(
+            (c) => c.DetailComponent
+          ),
+      },
+      {
+        path: 'new',
+        loadComponent: () =>
+          import('./components/article/edit/edit.component').then(
+            (c) => c.EditComponent
+          ),
+      },
+      {
+        path: 'edit/:id',
+        loadComponent: () =>
+          import('./components/article/edit/edit.component').then(
+            (c) => c.EditComponent
+          ),
+      },
+      {
+        path: '**',
+        redirectTo: 'list',
+      },
     ],
   },
   {
