@@ -9,10 +9,15 @@
       <button
         mat-mini-fab
         *ngIf="user?._id === article.author && !article.readyForReview"
+        (click)="editArticle()"
       >
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-mini-fab *ngIf="user?._id === article.author">
+      <button
+        mat-mini-fab
+        *ngIf="user?._id === article.author"
+        (click)="deleteArticle()"
+      >
         <mat-icon>delete</mat-icon>
       </button>
     </div>
@@ -25,4 +30,5 @@
     {{ article.content }}
   </mat-card-content>
 </mat-card>
+<div *ngIf="!article" class="notFound">Not found</div>
 <div class="end"></div>
