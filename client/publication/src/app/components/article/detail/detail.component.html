@@ -30,5 +30,10 @@
     {{ article.content }}
   </mat-card-content>
 </mat-card>
+<app-reviewer-list
+  *ngIf="article"
+  [reviewers]="article.reviewers"
+  [userRole]="user?.role"
+></app-reviewer-list>
 <div *ngIf="!article" class="notFound">Not found</div>
 <div class="end"></div>
