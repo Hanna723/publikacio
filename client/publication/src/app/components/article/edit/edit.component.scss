@@ -1,0 +1,40 @@
+mat-card {
+  width: 800px;
+
+  mat-card-content {
+    width: 700px;
+  }
+
+  mat-card-header {
+    margin-top: 60px !important;
+  }
+}
+
+mat-hint {
+    padding-left: 12px;
+    font-size: 12px;
+    display: flex;
+    column-gap: 4px;
+
+    mat-icon {
+        font-size: 16px;
+        height: 16px;
+        width: 16px;
+    }
+
+    div {
+        margin-top: auto;
+    }
+}
+
+
+.buttons {
+    margin-top: 24px;
+    display: flex;
+    justify-content: end;
+    column-gap: 16px;
+
+    button {
+        margin: 0;
+    }
+}

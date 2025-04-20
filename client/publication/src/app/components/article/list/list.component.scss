@@ -1,0 +1,17 @@
+div {
+  text-align: center;
+}
+
+tr[mat-row] {
+  cursor: pointer;
+}
+
+tr[mat-row]:hover {
+    background-color: var(--mat-sys-surface-variant);
+}
+
+.new {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 24px;
+}
