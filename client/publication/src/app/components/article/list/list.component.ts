@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { RoleName } from 'src/app/shared/models/Role';
 
 import { ArticleService } from 'src/app/shared/services/article.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -17,7 +20,7 @@ export interface TableArticle {
 
 @Component({
   selector: 'app-list',
-  imports: [CommonModule, MatTableModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatTableModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
@@ -31,6 +34,7 @@ export class ListComponent implements OnInit {
   ];
   articles: TableArticle[] = [];
   articleNum: number = 0;
+  isAuthor: boolean = false;
 
   constructor(
     private articleService: ArticleService,
@@ -59,9 +63,17 @@ export class ListComponent implements OnInit {
         });
       });
     });
+
+    this.userService.getUser().subscribe((user) => {
+      if (user.role === RoleName.AUTHOR) {
+        this.isAuthor = true;
+      }
+    });
   }
 
   navigateToArticle(article: TableArticle) {
     this.router.navigateByUrl('/article/' + article._id);
   }
+
+  newArticle() {}
 }

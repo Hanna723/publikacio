@@ -5,6 +5,17 @@
       <mat-chip *ngIf="article.isAccepted">Accepted</mat-chip>
       <mat-chip *ngIf="article.isAccepted === false">Rejected</mat-chip>
     </mat-chip-set>
+    <div>
+      <button
+        mat-mini-fab
+        *ngIf="user?._id === article.author && !article.readyForReview"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-mini-fab *ngIf="user?._id === article.author">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </mat-card-actions>
   <mat-card-header>
     <mat-card-title>{{ article.title }}</mat-card-title>
@@ -14,4 +25,4 @@
     {{ article.content }}
   </mat-card-content>
 </mat-card>
-<div></div>
+<div class="end"></div>

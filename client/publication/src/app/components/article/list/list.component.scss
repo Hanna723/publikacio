@@ -9,3 +9,9 @@ tr[mat-row] {
 tr[mat-row]:hover {
     background-color: var(--mat-sys-surface-variant);
 }
+
+.new {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 24px;
+}

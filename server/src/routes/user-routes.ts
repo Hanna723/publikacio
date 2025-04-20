@@ -321,7 +321,7 @@ export const configureUserRoutes = (
 					res.status(500).send('Internal server error.');
 				} else {
 					res.status(200).send({
-						id: user._id,
+						_id: user._id,
 						firstName: user.firstName,
 						lastName: user.lastName,
 						role: role.name,
