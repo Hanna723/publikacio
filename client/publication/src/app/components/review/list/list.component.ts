@@ -1,11 +1,75 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { Review } from 'src/app/shared/models/Review';
+import { RoleName } from 'src/app/shared/models/Role';
+import { ReviewService } from 'src/app/shared/services/review.service';
+import { UserService } from 'src/app/shared/services/user.service';
+
+export interface TableReview {
+  _id: string;
+  reviewer: string;
+  text: string;
+  isAccepted: boolean;
+}
 
 @Component({
   selector: 'app-list',
-  imports: [],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatTableModule],
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrl: './list.component.scss',
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
+  @Input() articleId?: string;
+  @Input() userRole?: RoleName | string;
+  reviews: Review[] = [];
+  tableReviews: TableReview[] = [];
+  displayedColumns: string[] = ['reviewer', 'text', 'isAccepted', 'action'];
+  isReviewer = false;
 
+  constructor(
+    private reviewService: ReviewService,
+    private userService: UserService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    console.log(this.userRole);
+    this.isReviewer = this.userRole === RoleName.REVIEWER;
+
+    if (!this.articleId) {
+      return;
+    }
+
+    this.reviewService.getByArticleId(this.articleId).subscribe((reviews) => {
+      this.reviews = reviews;
+
+      this.reviews.forEach((review) => {
+        this.userService.getUserById(review.reviewer).subscribe((reviewer) => {
+          if (!review._id) {
+            return;
+          }
+
+          const tableReview: TableReview = {
+            _id: review._id,
+            reviewer: reviewer.firstName + ' ' + reviewer.lastName,
+            text: review.text,
+            isAccepted: review.isAccepted,
+          };
+          this.tableReviews = [...this.tableReviews, tableReview];
+        });
+      });
+    });
+  }
+
+  newReview(): void {
+    this.router.navigateByUrl('/review/new');
+  }
+
+  navigateToReview(review: TableReview): void {
+    this.router.navigateByUrl('/review/' + review._id);
+  }
 }

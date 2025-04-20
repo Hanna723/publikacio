@@ -1,0 +1,17 @@
+.container {
+  width: 800px;
+  margin: auto;
+  margin-top: 48px;
+}
+
+tr[mat-row] {
+  cursor: pointer;
+}
+
+tr[mat-row]:hover {
+  background-color: var(--mat-sys-surface-variant);
+}
+
+th:last-of-type {
+  width: 48px;
+}

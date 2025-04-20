@@ -13,7 +13,7 @@ import { User } from 'src/app/shared/models/User';
 import { ArticleService } from 'src/app/shared/services/article.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { ReviewerListComponent } from "../reviewer-list/reviewer-list.component";
-
+import { ListComponent } from 'src/app/components/review/list/list.component'
 @Component({
   selector: 'app-detail',
   imports: [
@@ -23,7 +23,8 @@ import { ReviewerListComponent } from "../reviewer-list/reviewer-list.component"
     MatChipsModule,
     MatDialogModule,
     MatIconModule,
-    ReviewerListComponent
+    ReviewerListComponent,
+    ListComponent
 ],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss',

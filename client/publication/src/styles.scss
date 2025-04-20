@@ -21,6 +21,11 @@ html {
   );
 }
 
+td {
+  overflow: hidden;
+  max-width: 200px;
+}
+
 a {
   color: var(--mat-sys-primary);
   text-decoration: none;
