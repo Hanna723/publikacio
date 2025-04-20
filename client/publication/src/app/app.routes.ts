@@ -39,17 +39,17 @@ export const routes: Routes = [
           ),
       },
       {
-        path: ':id',
-        loadComponent: () =>
-          import('./components/article/detail/detail.component').then(
-            (c) => c.DetailComponent
-          ),
-      },
-      {
         path: 'new',
         loadComponent: () =>
           import('./components/article/edit/edit.component').then(
             (c) => c.EditComponent
+          ),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('./components/article/detail/detail.component').then(
+            (c) => c.DetailComponent
           ),
       },
       {

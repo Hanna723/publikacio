@@ -75,5 +75,7 @@ export class ListComponent implements OnInit {
     this.router.navigateByUrl('/article/' + article._id);
   }
 
-  newArticle() {}
+  newArticle() {
+    this.router.navigateByUrl('/article/new');
+  }
 }

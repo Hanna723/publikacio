@@ -55,7 +55,9 @@ export class DetailComponent implements OnInit {
     });
   }
 
-  editArticle() {}
+  editArticle() {
+    this.router.navigateByUrl('/article/edit/' + this.article?._id);
+  }
 
   deleteArticle() {
     const dialogRef = this.dialog.open(DialogComponent, {
