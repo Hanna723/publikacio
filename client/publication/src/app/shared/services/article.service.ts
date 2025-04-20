@@ -32,7 +32,7 @@ export class ArticleService {
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 
-    return this.http.post(this.URL_PREFIX, body, {
+    return this.http.post<Article>(this.URL_PREFIX, body, {
       headers: headers,
       withCredentials: true,
     });
@@ -48,7 +48,7 @@ export class ArticleService {
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 
-    return this.http.post(this.URL_PREFIX + article._id, body, {
+    return this.http.post<Article>(this.URL_PREFIX + article._id, body, {
       headers: headers,
       withCredentials: true,
     });

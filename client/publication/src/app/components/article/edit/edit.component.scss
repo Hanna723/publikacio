@@ -27,6 +27,14 @@ mat-hint {
     }
 }
 
-button {
+
+.buttons {
     margin-top: 24px;
+    display: flex;
+    justify-content: end;
+    column-gap: 16px;
+
+    button {
+        margin: 0;
+    }
 }
