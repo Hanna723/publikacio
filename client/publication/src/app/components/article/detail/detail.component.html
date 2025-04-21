@@ -26,9 +26,7 @@
     <mat-card-title>{{ article.title }}</mat-card-title>
     <mat-card-subtitle>By: {{ authorName }}</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
-    {{ article.content }}
-  </mat-card-content>
+  <mat-card-content>{{ article.content }}</mat-card-content>
 </mat-card>
 <app-reviewer-list
   *ngIf="article"
@@ -36,5 +34,10 @@
   [reviewers]="article.reviewers"
   [userRole]="user?.role"
 ></app-reviewer-list>
+<app-list
+  *ngIf="article"
+  [articleId]="article._id"
+  [userRole]="user?.role"
+></app-list>
 <div *ngIf="!article" class="notFound">Not found</div>
 <div class="end"></div>

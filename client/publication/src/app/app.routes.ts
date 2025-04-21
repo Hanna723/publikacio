@@ -78,5 +78,36 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'review',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'new/:id',
+        loadComponent: () =>
+          import('./components/review/edit/edit.component').then(
+            (c) => c.EditComponent
+          ),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('./components/review/detail/detail.component').then(
+            (c) => c.DetailComponent
+          ),
+      },
+      {
+        path: 'edit/:id',
+        loadComponent: () =>
+          import('./components/review/edit/edit.component').then(
+            (c) => c.EditComponent
+          ),
+      },
+      {
+        path: '**',
+        redirectTo: 'list',
+      },
+    ],
+  },
   { path: '**', redirectTo: '/auth/login' },
 ];

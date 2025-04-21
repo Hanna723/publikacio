@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
 import { HeaderComponent } from './shared/components/header/header.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { ProfileComponent } from './components/user/profile/profile.component';

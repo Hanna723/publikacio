@@ -1,6 +1,5 @@
 mat-card {
   width: 800px;
-  margin-bottom: 48px;
 
   mat-card-content {
     width: 700px;
@@ -9,7 +8,7 @@ mat-card {
   mat-card-actions {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     padding: 16px 40px 0 40px;
 
     button {

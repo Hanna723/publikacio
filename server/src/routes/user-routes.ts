@@ -121,13 +121,13 @@ export const configureUserRoutes = (
 							} else {
 								User.find({ role: reviewerRole._id })
 									.then((reviewers) => {
-										const publicReviewers = reviewers.map(reviewer => {
+										const publicReviewers = reviewers.map((reviewer) => {
 											return {
 												_id: reviewer._id,
 												firstName: reviewer.firstName,
 												lastName: reviewer.lastName,
-											}
-										})
+											};
+										});
 										res.status(200).send(publicReviewers);
 									})
 									.catch((error) => {

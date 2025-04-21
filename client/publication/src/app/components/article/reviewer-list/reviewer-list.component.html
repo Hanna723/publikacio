@@ -2,10 +2,7 @@
   <table
     mat-table
     [dataSource]="tableReviewers"
-    *ngIf="
-      reviewers.length === tableReviewers.length &&
-      (isEditor || reviewers.length > 0)
-    "
+    *ngIf="isEditor || reviewers.length > 0"
   >
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Reviewers</th>

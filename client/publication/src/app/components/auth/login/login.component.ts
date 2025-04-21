@@ -27,7 +27,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],

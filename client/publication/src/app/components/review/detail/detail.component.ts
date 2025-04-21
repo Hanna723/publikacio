@@ -2,42 +2,41 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
-import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
+import { Router, RouterLink } from '@angular/router';
 
-import { Article } from 'src/app/shared/models/Article';
+import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
+import { Review } from 'src/app/shared/models/Review';
 import { User } from 'src/app/shared/models/User';
 import { ArticleService } from 'src/app/shared/services/article.service';
+import { ReviewService } from 'src/app/shared/services/review.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { ReviewerListComponent } from '../reviewer-list/reviewer-list.component';
-import { ListComponent } from 'src/app/components/review/list/list.component';
+
 @Component({
   selector: 'app-detail',
   imports: [
     CommonModule,
     MatButtonModule,
     MatCardModule,
-    MatChipsModule,
     MatDialogModule,
     MatIconModule,
-    ReviewerListComponent,
-    ListComponent,
+    RouterLink,
   ],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss',
 })
 export class DetailComponent implements OnInit {
   readonly dialog = inject(MatDialog);
-  article?: Article;
-  authorName: string = '';
+  review?: Review;
+  reviewerName: string = '';
+  articleTitle: string = '';
   user?: User;
 
   constructor(
-    private articleService: ArticleService,
+    private reviewService: ReviewService,
     private userService: UserService,
+    private articleService: ArticleService,
     private router: Router
   ) {}
 
@@ -45,11 +44,15 @@ export class DetailComponent implements OnInit {
     const url = this.router.url.split('/');
     const id = url[url.length - 1];
 
-    this.articleService.getById(id).subscribe((article) => {
-      this.article = article;
+    this.reviewService.getById(id).subscribe((review) => {
+      this.review = review;
 
-      this.userService.getUserById(article.author).subscribe((author) => {
-        this.authorName = author.firstName + ' ' + author.lastName;
+      this.userService.getUserById(review.reviewer).subscribe((reviewer) => {
+        this.reviewerName = reviewer.firstName + ' ' + reviewer.lastName;
+      });
+
+      this.articleService.getById(review.article).subscribe((article) => {
+        this.articleTitle = article.title;
       });
     });
 
@@ -58,11 +61,11 @@ export class DetailComponent implements OnInit {
     });
   }
 
-  editArticle() {
-    this.router.navigateByUrl('/article/edit/' + this.article?._id);
+  editReview() {
+    this.router.navigateByUrl('/review/edit/' + this.review?._id);
   }
 
-  deleteArticle() {
+  deleteReview() {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '350px',
       data: {
@@ -73,12 +76,12 @@ export class DetailComponent implements OnInit {
     });
 
     dialogRef.componentInstance.submitEvent.subscribe(() => {
-      if (!this.article?._id) {
+      if (!this.review?._id) {
         return;
       }
 
-      this.articleService.delete(this.article._id).subscribe(() => {
-        this.router.navigateByUrl('/article/list');
+      this.reviewService.delete(this.review._id).subscribe(() => {
+        this.router.navigateByUrl('/article/' + this.review?.article);
       });
     });
   }

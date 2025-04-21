@@ -4,7 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   imports: [CommonModule, MatButtonModule, MatToolbarModule],

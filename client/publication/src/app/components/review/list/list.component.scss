@@ -1,5 +1,7 @@
-div {
-  text-align: center;
+.container {
+  width: 800px;
+  margin: auto;
+  margin-top: 48px;
 }
 
 tr[mat-row] {
@@ -10,8 +12,6 @@ tr[mat-row]:hover {
   background-color: var(--mat-sys-surface-variant);
 }
 
-.new {
-  display: flex;
-  justify-content: end;
-  margin-bottom: 24px;
+th:last-of-type {
+  width: 48px;
 }

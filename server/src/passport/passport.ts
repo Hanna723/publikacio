@@ -1,5 +1,6 @@
 import { PassportStatic } from 'passport';
 import { Strategy } from 'passport-local';
+
 import { User } from '../models/User';
 
 export const configurePassport = (passport: PassportStatic): PassportStatic => {

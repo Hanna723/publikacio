@@ -1,0 +1,37 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <mat-label>Review</mat-label>
+        <textarea
+          matInput
+          formControlName="text"
+          required=""
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="40"
+          (input)="triggerResize()"
+        ></textarea>
+        <mat-error *ngIf="reviewForm.controls['text'].errors?.['required']"
+          >Please enter your review text!</mat-error
+        >
+      </mat-form-field>
+      <mat-checkbox formControlName="isAccepted"
+        >Accept the article</mat-checkbox
+      >
+      <div class="buttons">
+        <button mat-raised-button type="button" (click)="onCancel()">
+          Cancel
+        </button>
+        <button mat-flat-button type="submit" [disabled]="!reviewForm.valid">
+          Save
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+<div class="end"></div>

@@ -56,7 +56,7 @@ export class ReviewerListComponent implements OnInit {
           name: user.firstName + ' ' + user.lastName,
         };
 
-        this.tableReviewers.push(tableReviewer);
+        this.tableReviewers = [...this.tableReviewers, tableReviewer];
       });
     });
   }
