@@ -1,4 +1,5 @@
 # publikacio
+
 Publikáció bíráló rendszer a Programrendszerek fejlesztése 2025 tárgy keretében
 
 # Futtatás
@@ -9,7 +10,7 @@ Az adatbázishoz kapcsolódó fájlok a `database` mappában találhatók. Futta
 
 `cd database`
 
-`docker compose up -d`
+`docker compose up`
 
 Az adatbázis a következő linken érhető el: http://localhost:8081/
 
@@ -29,7 +30,7 @@ A `server` mappa tartalmazza a szerveroldali kódot. Futtatás ezen a mappán be
 
 Az Angular projekt a `client/publication` mappában található. Futtatás ezen a mappán belül lehetséges:
 
-`cd client/publication/`
+`cd client/publication`
 
 `npm install`
 
@@ -58,9 +59,13 @@ A docker indítása után a `publication` adatbázis tartalmaz néhány kezdeti 
 - role: a szerep id-ja, amibe a felhasználó tartozik
 
 Kezdtei felhasználók (jelszó: password):
-- author@mailinator.com
-- editor@mailinator.com
-- reviewer@mailinator.com
+
+- author1@mailinator.com
+- author2@mailinator.com
+- editor1@mailinator.com
+- editor2@mailinator.com
+- reviewer1@mailinator.com
+- reviewer2@mailinator.com
 
 ### articles
 
@@ -68,6 +73,7 @@ Kezdtei felhasználók (jelszó: password):
 - author: a cikk szerzőjének id-ja
 - title
 - content
+- readyForReview: boolean, a cikk szerkeszthető amíg hamis, a szerkesztők láthatják ha igaz
 - reviewers: a cikk bírálóinak id-ja egy listában
 - isAccepted
 
@@ -76,4 +82,5 @@ Kezdtei felhasználók (jelszó: password):
 - id
 - text
 - article: a cikk id-ja, amihez az értékelés tartozik
+- isAccepted
 - reviewer: a bíráló id-ja, aki az értékelést készítette
