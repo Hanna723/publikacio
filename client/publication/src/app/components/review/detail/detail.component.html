@@ -18,9 +18,7 @@
     >
     <mat-card-subtitle>By: {{ reviewerName }}</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
-    {{ review.text }}
-  </mat-card-content>
+  <mat-card-content>{{ review.text }}</mat-card-content>
 </mat-card>
 <div *ngIf="!review" class="notFound">Not found</div>
 <div class="end"></div>

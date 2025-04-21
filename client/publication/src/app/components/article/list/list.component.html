@@ -1,11 +1,7 @@
 <div class="new" *ngIf="isAuthor">
   <button mat-mini-fab (click)="newArticle()"><mat-icon>add</mat-icon></button>
 </div>
-<table
-  mat-table
-  [dataSource]="articles"
-  *ngIf="articles && articleNum === articles.length && articleNum > 0"
->
+<table mat-table [dataSource]="articles" *ngIf="articles.length > 0">
   <ng-container matColumnDef="author">
     <th mat-header-cell *matHeaderCellDef>Author</th>
     <td mat-cell *matCellDef="let element">{{ element.author }}</td>
@@ -33,6 +29,4 @@
     (click)="navigateToArticle(row)"
   ></tr>
 </table>
-<div *ngIf="articles && articleNum === articles.length && articleNum === 0">
-  No articles yet
-</div>
+<div *ngIf="articles.length === 0">No articles yet</div>

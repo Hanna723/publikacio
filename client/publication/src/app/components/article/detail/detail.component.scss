@@ -25,6 +25,10 @@ mat-card {
   mat-card-header {
     margin-top: 0;
   }
+
+  mat-card-content {
+    white-space: pre-wrap;
+  }
 }
 
 .notFound {

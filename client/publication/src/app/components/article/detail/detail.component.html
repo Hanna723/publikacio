@@ -26,9 +26,7 @@
     <mat-card-title>{{ article.title }}</mat-card-title>
     <mat-card-subtitle>By: {{ authorName }}</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
-    {{ article.content }}
-  </mat-card-content>
+  <mat-card-content>{{ article.content }}</mat-card-content>
 </mat-card>
 <app-reviewer-list
   *ngIf="article"

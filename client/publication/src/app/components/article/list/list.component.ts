@@ -33,7 +33,6 @@ export class ListComponent implements OnInit {
     'isAccepted',
   ];
   articles: TableArticle[] = [];
-  articleNum: number = 0;
   isAuthor: boolean = false;
 
   constructor(
@@ -44,8 +43,6 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.articleService.getAll().subscribe((articles) => {
-      this.articleNum = articles.length;
-
       articles.forEach((article) => {
         this.userService.getUserById(article.author).subscribe((author) => {
           const authorName = author.firstName + ' ' + author.lastName;
@@ -59,7 +56,7 @@ export class ListComponent implements OnInit {
             isAccepted: article.isAccepted,
           };
 
-          this.articles.push(tableArticle);
+          this.articles = [...this.articles, tableArticle];
         });
       });
     });
