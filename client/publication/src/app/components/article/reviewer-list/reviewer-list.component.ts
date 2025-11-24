@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -24,12 +24,11 @@ export interface TableReviewer {
 @Component({
   selector: 'app-reviewer-list',
   imports: [
-    CommonModule,
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
-    MatTableModule,
-  ],
+    MatTableModule
+],
   templateUrl: './reviewer-list.component.html',
   styleUrl: './reviewer-list.component.scss',
 })

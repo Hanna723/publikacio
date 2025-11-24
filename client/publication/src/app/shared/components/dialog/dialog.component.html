@@ -1,13 +1,21 @@
 <div class="container">
-  <div mat-dialog-title *ngIf="data.title">{{ data.title }}</div>
-  <mat-dialog-content *ngIf="data.text" [innerHtml]="data.text">
-  </mat-dialog-content>
+  @if (data.title) {
+    <div mat-dialog-title>{{ data.title }}</div>
+  }
+  @if (data.text) {
+    <mat-dialog-content [innerHtml]="data.text">
+    </mat-dialog-content>
+  }
   <div mat-dialog-actions>
-    <button *ngIf="data.button" mat-raised-button (click)="onCancel()">
-      {{ data.button }}
-    </button>
-    <button *ngIf="data.submitButton" mat-flat-button (click)="onSubmit()">
-      {{ data.submitButton }}
-    </button>
+    @if (data.button) {
+      <button mat-raised-button (click)="onCancel()">
+        {{ data.button }}
+      </button>
+    }
+    @if (data.submitButton) {
+      <button mat-flat-button (click)="onSubmit()">
+        {{ data.submitButton }}
+      </button>
+    }
   </div>
 </div>

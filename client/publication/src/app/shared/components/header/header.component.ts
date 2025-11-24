@@ -3,11 +3,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AuthService } from '../../services/auth.service';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 
 @Component({
-  imports: [CommonModule, MatButtonModule, MatToolbarModule],
+  imports: [MatButtonModule, MatToolbarModule],
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],

@@ -1,78 +1,96 @@
 <app-auth-container title="Sign up"
   ><form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <mat-label>Email</mat-label>
-      <input matInput required formControlName="email" />
-      <mat-error *ngIf="signupForm.controls['email'].errors?.['required']"
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput required formControlName="email" />
+    @if (signupForm.controls['email'].errors?.['required']) {
+      <mat-error
         >Please enter an email!</mat-error
-      >
-      <mat-error *ngIf="signupForm.controls['email'].errors?.['email']"
-        >Not a valid email!</mat-error
-      >
-      <mat-error *ngIf="signupForm.controls['email'].errors?.['used']"
-        >Email already in use!</mat-error
-      >
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input
-        matInput
-        [type]="hide ? 'password' : 'text'"
-        required
-        formControlName="password"
-        minlength="8"
-      />
-      <button
-        mat-icon-button
-        matSuffix
-        type="button"
-        (click)="hide = !hide"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hide"
-        tabindex="-1"
-      >
-        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-      </button>
-      <mat-error *ngIf="signupForm.controls['password'].errors?.['required']"
-        >Please enter a password!</mat-error
-      >
-      <mat-error *ngIf="signupForm.controls['password'].errors?.['minlength']"
-        >Must be at least 8 characters long!</mat-error
-      >
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>First name</mat-label>
-      <input matInput required formControlName="firstName" />
-      <mat-error *ngIf="signupForm.controls['firstName'].errors?.['required']"
-        >Please enter your first name!</mat-error
-      >
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Last name</mat-label>
-      <input matInput required formControlName="lastName" />
-      <mat-error *ngIf="signupForm.controls['lastName'].errors?.['required']"
-        >Please enter your last name!</mat-error
-      >
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Role</mat-label>
-      <mat-select required formControlName="role">
-        @for (role of roles; track role) {
-        <mat-option [value]="role._id">{{ role.name }}</mat-option>
+        >
+      }
+      @if (signupForm.controls['email'].errors?.['email']) {
+        <mat-error
+          >Not a valid email!</mat-error
+          >
         }
-      </mat-select>
-      <mat-error *ngIf="signupForm.controls['role'].errors?.['required']"
-        >Please choose a role!</mat-error
-      >
-      <mat-error *ngIf="signupForm.errors?.['unknown']"
-        >Unexpected error</mat-error
-      >
-    </mat-form-field>
-    <button mat-flat-button type="submit" [disabled]="!signupForm.valid">
-      Signup
-    </button>
-  </form>
-  <div class="auth-nav">
-    Already have an account? <a routerLink="/auth/login">Login</a>
-  </div>
-</app-auth-container>
+        @if (signupForm.controls['email'].errors?.['used']) {
+          <mat-error
+            >Email already in use!</mat-error
+            >
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            required
+            formControlName="password"
+            minlength="8"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+              tabindex="-1"
+              >
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            @if (signupForm.controls['password'].errors?.['required']) {
+              <mat-error
+                >Please enter a password!</mat-error
+                >
+            }
+            @if (signupForm.controls['password'].errors?.['minlength']) {
+              <mat-error
+                >Must be at least 8 characters long!</mat-error
+                >
+              }
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>First name</mat-label>
+              <input matInput required formControlName="firstName" />
+              @if (signupForm.controls['firstName'].errors?.['required']) {
+                <mat-error
+                  >Please enter your first name!</mat-error
+                  >
+                }
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Last name</mat-label>
+                <input matInput required formControlName="lastName" />
+                @if (signupForm.controls['lastName'].errors?.['required']) {
+                  <mat-error
+                    >Please enter your last name!</mat-error
+                    >
+                  }
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Role</mat-label>
+                  <mat-select required formControlName="role">
+                    @for (role of roles; track role) {
+                      <mat-option [value]="role._id">{{ role.name }}</mat-option>
+                    }
+                  </mat-select>
+                  @if (signupForm.controls['role'].errors?.['required']) {
+                    <mat-error
+                      >Please choose a role!</mat-error
+                      >
+                    }
+                    @if (signupForm.errors?.['unknown']) {
+                      <mat-error
+                        >Unexpected error</mat-error
+                        >
+                      }
+                    </mat-form-field>
+                    <button mat-flat-button type="submit" [disabled]="!signupForm.valid">
+                      Signup
+                    </button>
+                  </form>
+                  <div class="auth-nav">
+                    Already have an account? <a routerLink="/auth/login">Login</a>
+                  </div>
+                </app-auth-container>

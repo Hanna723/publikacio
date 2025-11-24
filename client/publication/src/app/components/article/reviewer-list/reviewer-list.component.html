@@ -1,26 +1,31 @@
 <div class="container">
-  <table
-    mat-table
-    [dataSource]="tableReviewers"
-    *ngIf="isEditor || reviewers.length > 0"
-  >
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Reviewers</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-    </ng-container>
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef>
-        <button mat-mini-fab (click)="newReviewer()" *ngIf="isEditor">
-          <mat-icon>add</mat-icon>
-        </button>
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-mini-fab (click)="deleteReviewer(element)" *ngIf="isEditor">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+  @if (isEditor || reviewers.length > 0) {
+    <table
+      mat-table
+      [dataSource]="tableReviewers"
+      >
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Reviewers</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>
+          @if (isEditor) {
+            <button mat-mini-fab (click)="newReviewer()">
+              <mat-icon>add</mat-icon>
+            </button>
+          }
+        </th>
+        <td mat-cell *matCellDef="let element">
+          @if (isEditor) {
+            <button mat-mini-fab (click)="deleteReviewer(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  }
 </div>

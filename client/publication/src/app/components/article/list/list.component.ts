@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +20,7 @@ export interface TableArticle {
 
 @Component({
   selector: 'app-list',
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatTableModule],
+  imports: [MatButtonModule, MatIconModule, MatTableModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
