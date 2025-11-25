@@ -14,17 +14,19 @@ import { configureUserRoutes } from './routes/user-routes';
 
 const app = express();
 const port = 5000;
-const dbUrl = 'mongodb://publicationAdmin:example@localhost:27017/publication';
+const dbUrl = process.env.MONGO_URL;
 
-mongoose
-	.connect(dbUrl)
-	.then(() => {
-		console.log('Succesfully connected');
-	})
-	.catch((error) => {
-		console.log(error);
-		return;
-	});
+if (dbUrl) {
+	mongoose
+		.connect(dbUrl)
+		.then(() => {
+			console.log('Succesfully connected');
+		})
+		.catch((error) => {
+			console.log(error);
+			return;
+		});
+}
 
 const whitelist = ['*', 'http://localhost:4200'];
 const corsOptions = {
