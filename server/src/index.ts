@@ -59,10 +59,10 @@ app.use(passport.session());
 
 configurePassport(passport);
 
-app.use('/article', configureArticleRoutes(express.Router()));
-app.use('/review', configureReviewRoutes(express.Router()));
-app.use('/roles', configureRoleRoutes(express.Router()));
-app.use('/user', configureUserRoutes(passport, express.Router()));
+app.use('/api/article', configureArticleRoutes(express.Router()));
+app.use('/api/review', configureReviewRoutes(express.Router()));
+app.use('/api/roles', configureRoleRoutes(express.Router()));
+app.use('/api/user', configureUserRoutes(passport, express.Router()));
 
 app.listen(port, () => {
 	console.log('Server is listening on port ' + port.toString());

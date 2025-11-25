@@ -7,7 +7,7 @@ import { Role } from '../models/Role';
   providedIn: 'root',
 })
 export class RoleService {
-  URL_PREFIX = 'http://localhost:5000/roles/';
+  URL_PREFIX = 'api/roles/';
 
   constructor(private http: HttpClient) {}
 

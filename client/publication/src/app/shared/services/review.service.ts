@@ -7,7 +7,7 @@ import { Review } from '../models/Review';
   providedIn: 'root',
 })
 export class ReviewService {
-  URL_PREFIX = 'http://localhost:5000/review/';
+  URL_PREFIX = 'api/review/';
 
   constructor(private http: HttpClient) {}
 

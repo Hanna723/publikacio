@@ -7,7 +7,7 @@ import { User } from '../models/User';
   providedIn: 'root',
 })
 export class UserService {
-  URL_PREFIX = 'http://localhost:5000/user/';
+  URL_PREFIX = 'api/user/';
 
   constructor(private http: HttpClient) {}
 

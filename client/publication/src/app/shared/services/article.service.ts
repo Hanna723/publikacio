@@ -7,7 +7,7 @@ import { Article } from '../models/Article';
   providedIn: 'root',
 })
 export class ArticleService {
-  URL_PREFIX = 'http://localhost:5000/article/';
+  URL_PREFIX = 'api/article/';
 
   constructor(private http: HttpClient) {}
 
