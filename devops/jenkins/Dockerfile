@@ -20,6 +20,10 @@ RUN echo \
 RUN apt-get update && apt-get install -y docker-ce-cli
 RUN apt-get update && apt-get install -y libatomic1
 
+# Install Node
+RUN curl -fsSL https://deb.nodesource.com/setup_25.x | bash - \
+  && apt-get install -y nodejs
+
 # Create the docker group
 RUN groupadd -f docker
 
@@ -35,6 +39,14 @@ RUN echo "jenkins ALL=(ALL) NOPASSWD: /usr/bin/chown" >> /etc/sudoers.d/jenkins
 # Set up entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Install plugins
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
+
+# Add JCasC configuration
+ENV CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs/jenkins.yaml
+COPY jenkins.yaml /usr/share/jenkins/ref/casc_configs/jenkins.yaml
 
 # Switch to jenkins user
 USER jenkins
