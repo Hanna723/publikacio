@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Role } from '../models/Role';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleService {
-  URL_PREFIX = 'api/roles/';
+  URL_PREFIX = environment.apiUrl + '/roles/';
 
   constructor(private http: HttpClient) {}
 
