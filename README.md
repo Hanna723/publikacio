@@ -1,14 +1,24 @@
 # publikacio
 
-Publikáció bíráló rendszer a Programrendszerek fejlesztése 2025 tárgy keretében
+Publikáció bíráló rendszer a Programrendszerek fejlesztése 2025 tárgy keretében.
 
-# Futtatás
+Kiegészítve a 2025/2026. tanév első félévében a Felhő és DevOps alapok tárgy keretében.
+
+# Futtatás - docker
+
+Az alkalmazás a következő paranccsal indítható el:
+
+`docker compose up`
+
+Adatbázis: http://localhost:8081/
+
+Angular alkalmazás: http://localhost/
+
+# Futtatás - local development
 
 ## Adatbázis
 
-Az adatbázishoz kapcsolódó fájlok a `database` mappában találhatók. Futtatás ezen a mappán belül lehetséges:
-
-`cd database`
+Az adatbázishoz kapcsolódó fájlok a gyökér mappában találhatók. Futtatás:
 
 `docker compose up`
 

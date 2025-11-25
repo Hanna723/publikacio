@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -9,7 +9,7 @@ import {
 
 @Component({
   selector: 'app-dialog',
-  imports: [CommonModule, MatButtonModule, MatDialogModule],
+  imports: [MatButtonModule, MatDialogModule],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.scss',
 })

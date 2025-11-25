@@ -3,47 +3,57 @@
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput required formControlName="email" />
-      <mat-error *ngIf="loginForm.controls['email'].errors?.['required']"
-        >Please enter an email!</mat-error
-      >
-      <mat-error *ngIf="loginForm.controls['email'].errors?.['email']"
-        >Not a valid email!</mat-error
-      >
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input
-        matInput
-        [type]="hide ? 'password' : 'text'"
-        required
-        formControlName="password"
-      />
-      <button
-        mat-icon-button
-        matSuffix
-        type="button"
-        (click)="hide = !hide"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hide"
-        tabindex="-1"
-      >
-        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-      </button>
-      <mat-error *ngIf="loginForm.controls['password'].errors?.['required']"
-        >Please enter a password!</mat-error
-      >
-      <mat-error *ngIf="loginForm.controls['password'].errors?.['wrong']"
-        >Wrong email or password!</mat-error
-      >
-      <mat-error *ngIf="loginForm.errors?.['unknown']"
-        >Unexpected error</mat-error
-      >
-    </mat-form-field>
-    <button mat-flat-button type="submit" [disabled]="!loginForm.valid">
-      Login
-    </button>
-  </form>
-  <div class="auth-nav">
-    Don't have an account? <a routerLink="/auth/signup">Sign up</a>
-  </div>
-</app-auth-container>
+      @if (loginForm.controls['email'].errors?.['required']) {
+        <mat-error
+          >Please enter an email!</mat-error
+          >
+        }
+        @if (loginForm.controls['email'].errors?.['email']) {
+          <mat-error
+            >Not a valid email!</mat-error
+            >
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            required
+            formControlName="password"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+              tabindex="-1"
+              >
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            @if (loginForm.controls['password'].errors?.['required']) {
+              <mat-error
+                >Please enter a password!</mat-error
+                >
+            }
+            @if (loginForm.controls['password'].errors?.['wrong']) {
+              <mat-error
+                >Wrong email or password!</mat-error
+                >
+              }
+              @if (loginForm.errors?.['unknown']) {
+                <mat-error
+                  >Unexpected error</mat-error
+                  >
+                }
+              </mat-form-field>
+              <button mat-flat-button type="submit" [disabled]="!loginForm.valid">
+                Login
+              </button>
+            </form>
+            <div class="auth-nav">
+              Don't have an account? <a routerLink="/auth/signup">Sign up</a>
+            </div>
+          </app-auth-container>

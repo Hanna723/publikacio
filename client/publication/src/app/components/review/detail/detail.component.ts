@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -16,13 +16,12 @@ import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-detail',
   imports: [
-    CommonModule,
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
     MatIconModule,
-    RouterLink,
-  ],
+    RouterLink
+],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss',
 })

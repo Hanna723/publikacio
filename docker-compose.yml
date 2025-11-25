@@ -1,0 +1,73 @@
+# Use root/example as user/password credentials
+services:
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+      - ./setup/mongo-init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "27017:27017"
+    networks:
+      - publication_network
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+    networks:
+      - publication_network
+
+  server:
+    build:
+      context: "./server"
+      dockerfile: "./Dockerfile"
+    container_name: server
+    restart: always
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URL: mongodb://publicationAdmin:example@mongo:27017/publication
+    networks:
+      - publication_network
+  
+  client:
+    build:
+      context: "./client/publication"
+      dockerfile: "./Dockerfile"
+    container_name: client
+    restart: always
+    depends_on:
+      - server
+    networks:
+      - publication_network
+    
+  proxy:
+    image: nginx:stable-alpine
+    container_name: proxy
+    environment:
+      - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.conf
+      - NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx
+    volumes:
+      - ${PWD}/nginx.conf:/etc/nginx/templates/nginx.conf.conf
+    ports:
+      - 80:80
+    networks:
+      - publication_network
+  
+networks:
+  publication_network:
