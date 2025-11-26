@@ -53,7 +53,7 @@ export class LoginComponent {
         this.loginForm.controls['password'].value
       )
       .subscribe({
-        next: (user) => {
+        next: () => {
           this.loginEvent.emit();
           this.router.navigateByUrl('/article/list');
         },

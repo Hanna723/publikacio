@@ -385,11 +385,11 @@ export const configureUserRoutes = (
 	) {
 		Review.find({ article: articleId })
 			.then((reviews) => {
-				let acceptedReviews = reviews.filter(
+				const acceptedReviews = reviews.filter(
 					(review) =>
 						review.isAccepted && !review.reviewer.equals(deletedReviewerId)
 				).length;
-				let allReviews = reviews.filter(
+				const allReviews = reviews.filter(
 					(review) => !review.reviewer.equals(deletedReviewerId)
 				).length;
 

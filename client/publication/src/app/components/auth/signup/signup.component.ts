@@ -77,7 +77,7 @@ export class SignupComponent implements OnInit {
     };
 
     this.authService.register(user).subscribe({
-      next: (user) => {
+      next: () => {
         this.router.navigateByUrl('auth/login');
       },
       error: (error) => {

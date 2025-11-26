@@ -32,7 +32,7 @@ export const configurePassport = (passport: PassportStatic): PassportStatic => {
 								if (error || !isMatch) {
 									done('Incorrect username or password.');
 								} else {
-									let publicUser: any = {
+									const publicUser = {
 										_id: user._id,
 										email: user.email,
 										firstName: user.firstName,
