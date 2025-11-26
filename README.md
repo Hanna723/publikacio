@@ -4,6 +4,24 @@ Publikáció bíráló rendszer a Programrendszerek fejlesztése 2025 tárgy ker
 
 Kiegészítve a 2025/2026. tanév első félévében a Felhő és DevOps alapok tárgy keretében.
 
+# Funkciók
+
+## Az alkalmazás
+
+Az alkalmazás a MEAN stackre épül és egy publikáció bíráló rendszert valósít meg. A felhasználók három szerepkör egyikébe tartoznak, amit a regisztráció során adnak meg:
+
+- Író: cikkeket hozhat létre. Amint egy cikk elkészült, megjelölheti azt, így elérhetővé válik a szerkesztők számára.
+- Szerkesztő: láthatja a bírálásra kész cikkeket és bírálókat rendelhet hozzá.
+- Bíráló: láthatja a cikkeket amikhez egy szerkesztő hozzárendelte és értékelést írhat hozzá.
+
+## Jenkins
+
+A projekt része egy dockerben futó Jenkins image. Indítás után a következő linken érhető el: http://localhost:8080/
+
+Egy job-ot tartalmaz, ami a kliens és szerver kódot buildeli, linteli, valamint a szerver oldalon a teszteket is futtatja.
+
+Első indításkor egy admin felhasználó regisztrációja szükséges. A telepíthető package-k közül nem kell egyiket sem külön telepíteni, mivel a docker image már tartalmazza a szükségeseket.
+
 # Futtatás - docker
 
 Az alkalmazás a következő paranccsal indítható el:
@@ -13,6 +31,8 @@ Az alkalmazás a következő paranccsal indítható el:
 Adatbázis: http://localhost:8081/
 
 Angular alkalmazás: http://localhost/
+
+Jenkins: http://localhost:8080/
 
 # Futtatás - local development
 
