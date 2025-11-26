@@ -52,6 +52,9 @@ RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 ENV CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs/jenkins.yaml
 COPY jenkins.yaml /usr/share/jenkins/ref/casc_configs/jenkins.yaml
 
+# Copy job config
+COPY jobs /usr/share/jenkins/ref/jobs
+
 # Switch to jenkins user
 USER jenkins
 
