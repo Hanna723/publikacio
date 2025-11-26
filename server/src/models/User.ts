@@ -32,17 +32,15 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
 });
 
 UserSchema.pre<IUser>('save', function (next) {
-	const user = this;
-
 	bcrypt.genSalt(SALT_FACTOR, (error, salt) => {
 		if (error) {
 			return next(error);
 		}
-		bcrypt.hash(user.password, salt, (err, encrypted) => {
+		bcrypt.hash(this.password, salt, (err, encrypted) => {
 			if (err) {
 				return next(err);
 			}
-			user.password = encrypted;
+			this.password = encrypted;
 			next();
 		});
 	});
@@ -52,8 +50,7 @@ UserSchema.methods.comparePassword = function (
 	candidatePassword: string,
 	callback: (error: Error | null, isMatch: boolean) => void
 ): void {
-	const user = this;
-	bcrypt.compare(candidatePassword, user.password, (error, isMatch) => {
+	bcrypt.compare(candidatePassword, this.password, (error, isMatch) => {
 		if (error) {
 			callback(error, false);
 		}

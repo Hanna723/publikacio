@@ -83,7 +83,7 @@ export class EditComponent implements OnInit {
   }
 
   triggerResize() {
-    let previousScrollY = window.scrollY;
+    const previousScrollY = window.scrollY;
     this.autosize.resizeToFitContent(true);
     window.scrollTo({ top: previousScrollY });
   }

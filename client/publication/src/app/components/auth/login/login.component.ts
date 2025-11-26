@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { AuthContainerComponent } from '../auth-container/auth-container.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -53,7 +53,7 @@ export class LoginComponent {
         this.loginForm.controls['password'].value
       )
       .subscribe({
-        next: (user) => {
+        next: () => {
           this.loginEvent.emit();
           this.router.navigateByUrl('/article/list');
         },
