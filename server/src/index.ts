@@ -101,7 +101,7 @@ app.get('/metrics', async (_, res) => {
 		res.end(metrics);
 	} catch (err) {
 		res.writeHead(500);
-		res.end('Wrror collecting metrics');
+		res.end('Error collecting metrics: ' + err);
 	}
 });
 
