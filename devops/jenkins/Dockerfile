@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y libatomic1
 RUN curl -fsSL https://deb.nodesource.com/setup_25.x | bash - \
   && apt-get install -y nodejs
 
-  # Chromium for Karma
+# Chromium for Karma
 RUN apt-get update && apt-get install -y chromium
 ENV CHROME_BIN=/usr/bin/chromium
 

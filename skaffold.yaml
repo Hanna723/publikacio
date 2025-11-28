@@ -12,14 +12,15 @@ build:
       context: ./client/publication
   tagPolicy:
     envTemplate:
-      template: "latest"
+      template: 'latest'
 manifests:
-  rawYaml: [
-    devops/kubernetes/mongo.yaml,
-    devops/kubernetes/mongo-express.yaml,
-    devops/kubernetes/server.yaml,
-    devops/kubernetes/client.yaml,
-    devops/kubernetes/proxy.yaml
-  ]
+  rawYaml:
+    [
+      devops/kubernetes/mongo.yaml,
+      devops/kubernetes/mongo-express.yaml,
+      devops/kubernetes/server.yaml,
+      devops/kubernetes/client.yaml,
+      devops/kubernetes/proxy.yaml,
+    ]
 deploy:
   kubectl: {}

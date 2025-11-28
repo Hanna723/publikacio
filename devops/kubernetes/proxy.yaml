@@ -16,9 +16,9 @@ spec:
           image: nginx:stable-alpine
           env:
             - name: NGINX_ENVSUBST_TEMPLATE_SUFFIX
-              value: ".conf"
+              value: '.conf'
             - name: NGINX_ENVSUBST_OUTPUT_DIR
-              value: "/etc/nginx"
+              value: '/etc/nginx'
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf

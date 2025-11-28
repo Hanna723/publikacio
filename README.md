@@ -46,12 +46,12 @@ Az alkalmazást Kubernetes (minikube) használatával lehet deployolni. Ez egy s
 
 A szkript a következő lépéseket hajtja végre:
 
- - minikube indítása
- - configmap készítése az nginx.conf és az adatbázist inicializáló init.js fájlokhoz
- - Skaffold futtatása
-   - server és client image-k buildelése
-   - deployolás
- - Az alkalmazás automatikus megnyitása böngészőben, amint az készen áll
+- minikube indítása
+- configmap készítése az nginx.conf és az adatbázist inicializáló init.js fájlokhoz
+- Skaffold futtatása
+  - server és client image-k buildelése
+  - deployolás
+- Az alkalmazás automatikus megnyitása böngészőben, amint az készen áll
 
 ## Terraform
 

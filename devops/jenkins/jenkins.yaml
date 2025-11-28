@@ -9,29 +9,29 @@ jenkins:
     local:
       allowsSignup: false
       users:
-      - id: "Hanna723"
-        name: "Hanna Somogyvári"
-        properties:
-        - mailer:
-            emailAddress: "hanna.somogyvari@gmail.com"
+        - id: 'Hanna723'
+          name: 'Hanna Somogyvári'
+          properties:
+            - mailer:
+                emailAddress: 'hanna.somogyvari@gmail.com'
   updateCenter:
     sites:
-    - id: "default"
-      url: "https://updates.jenkins.io/update-center.json"
+      - id: 'default'
+        url: 'https://updates.jenkins.io/update-center.json'
 unclassified:
   location:
-    adminAddress: "address not configured yet <nobody@nowhere>"
-    url: "http://localhost:8080/"
+    adminAddress: 'address not configured yet <nobody@nowhere>'
+    url: 'http://localhost:8080/'
 tool:
   git:
     installations:
-    - home: "git"
-      name: "Default"
+      - home: 'git'
+        name: 'Default'
   mavenGlobalConfig:
-    globalSettingsProvider: "standard"
-    settingsProvider: "standard"
+    globalSettingsProvider: 'standard'
+    settingsProvider: 'standard'
   nodejs:
     installations:
-      - name: "NodeJS 25"
-        home: "/usr"
+      - name: 'NodeJS 25'
+        home: '/usr'
         properties: []
