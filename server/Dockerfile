@@ -18,4 +18,4 @@ RUN npm install
 COPY --from=build /usr/src/app/build /app
 
 EXPOSE 5000
-CMD ["node", "index.js"]
+CMD ["node", "src/index.js"]

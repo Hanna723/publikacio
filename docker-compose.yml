@@ -3,7 +3,7 @@ services:
     container_name: jenkins
     build:
       context: "./devops/jenkins"
-      dockerfile: ".//Dockerfile"
+      dockerfile: "./Dockerfile"
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -77,9 +77,37 @@ services:
       - 80:80
     networks:
       - publication_network
+
+  prometheus:
+    container_name: prometheus
+    build:
+      context: ./devops/monitoring/prometheus
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./devops/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - publication_network
   
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./devops/monitoring/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: "admin"
+    networks:
+      - publication_network
+
 networks:
   publication_network:
 
 volumes:
   jenkins_home:
+  grafana_data:
