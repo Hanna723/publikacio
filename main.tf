@@ -10,27 +10,27 @@ terraform {
 provider "docker" {}
 
 module "mongo" {
-  source = "./terraform-modules/mongo"
+  source = "./devops/terraform-modules/mongo"
   network_name = docker_network.publication_network.name
 }
 
 module "mongo_express" {
-  source = "./terraform-modules/mongo-express"
+  source = "./devops/terraform-modules/mongo-express"
   network_name = docker_network.publication_network.name
 }
 
 module "server" {
-  source = "./terraform-modules/server"
+  source = "./devops/terraform-modules/server"
   network_name = docker_network.publication_network.name
 }
 
 module "client" {
-  source = "./terraform-modules/client"
+  source = "./devops/terraform-modules/client"
   network_name = docker_network.publication_network.name
 }
 
 module "proxy" {
-  source       = "./terraform-modules/proxy"
+  source       = "./devops/terraform-modules/proxy"
   network_name = docker_network.publication_network.name
 
   depends_on_server = module.server
