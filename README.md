@@ -14,6 +14,18 @@ Az alkalmazás a MEAN stackre épül és egy publikáció bíráló rendszert va
 - Szerkesztő: láthatja a bírálásra kész cikkeket és bírálókat rendelhet hozzá.
 - Bíráló: láthatja a cikkeket amikhez egy szerkesztő hozzárendelte és értékelést írhat hozzá.
 
+## Konténerizáció
+
+A teljes alkalmazás (adatbázis, kliens, szerver, Jenkins) egy konténerben indítható a következő paranccsal:
+
+`docker compose up`
+
+Adatbázis: http://localhost:8081/
+
+Angular alkalmazás: http://localhost/
+
+Jenkins: http://localhost:8080/
+
 ## Jenkins
 
 A projekt része egy dockerben futó Jenkins image. Indítás után a következő linken érhető el: http://localhost:8080/
@@ -37,17 +49,21 @@ A szkript a következő lépéseket hajtja végre:
    - deployolás
  - Az alkalmazás automatikus megnyitása böngészőben, amint az készen áll
 
-# Futtatás - docker
+## Terraform
 
-Az alkalmazás a következő paranccsal indítható el:
+Az alkalmazás Terraform használatával a következő szkripptel indítható:
 
-`docker compose up`
+`./terraform-run.sh`
 
-Adatbázis: http://localhost:8081/
+A szkript meg fog állni, hogy felhasználói inputot kérjen. Ekkor a `yes` választ kell megadni.
 
-Angular alkalmazás: http://localhost/
+Leállítás:
 
-Jenkins: http://localhost:8080/
+`terrafrom destroy`
+
+Itt is szükséges a `yes` válasz megadása.
+
+> FONTOS: a docker-compose.yml és a Terraform ugyanazokat az image neveket használja, ami futtatáskor konfliktushoz vezet. A Terraform indítása előtt ezért szükséges a docker image-k kitörlése.
 
 # Futtatás - local development
 
