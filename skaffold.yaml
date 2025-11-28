@@ -1,0 +1,25 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: publication
+build:
+  local:
+    push: false
+  artifacts:
+    - image: server
+      context: ./server
+    - image: client
+      context: ./client/publication
+  tagPolicy:
+    envTemplate:
+      template: "latest"
+manifests:
+  rawYaml: [
+    devops/kubernetes/mongo.yaml,
+    devops/kubernetes/mongo-express.yaml,
+    devops/kubernetes/server.yaml,
+    devops/kubernetes/client.yaml,
+    devops/kubernetes/proxy.yaml
+  ]
+deploy:
+  kubectl: {}
