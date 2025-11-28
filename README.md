@@ -16,7 +16,7 @@ Az alkalmazás a MEAN stackre épül és egy publikáció bíráló rendszert va
 
 ## Konténerizáció
 
-A teljes alkalmazás (adatbázis, kliens, szerver, Jenkins) egy konténerben indítható a következő paranccsal:
+A teljes alkalmazás (adatbázis, kliens, szerver, Jenkins, Prometheus, Grafana) egy konténerben indítható a következő paranccsal:
 
 `docker compose up`
 
@@ -25,6 +25,10 @@ Adatbázis: http://localhost:8081/
 Angular alkalmazás: http://localhost/
 
 Jenkins: http://localhost:8080/
+
+Prometheus: http://localhost:9090/
+
+Grafana: http://localhost:3000/
 
 ## Jenkins
 
@@ -64,6 +68,16 @@ Leállítás:
 Itt is szükséges a `yes` válasz megadása.
 
 > FONTOS: a docker-compose.yml és a Terraform ugyanazokat az image neveket használja, ami futtatáskor konfliktushoz vezet. A Terraform indítása előtt ezért szükséges a docker image-k kitörlése.
+
+## Monitorozás
+
+### Prometheus
+
+A Prometheus a `docker compose up` parancs futtatása után a következő linken érhető el: http://localhost:9090/
+
+### Grafana
+
+A Grafana a `docker compose up` parancs futtatása után a következő linken érhető el: http://localhost:3000/
 
 # Futtatás - local development
 
