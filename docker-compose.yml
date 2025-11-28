@@ -77,6 +77,18 @@ services:
       - 80:80
     networks:
       - publication_network
+
+  prometheus:
+    container_name: prometheus
+    build:
+      context: ./devops/monitoring/prometheus
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./devops/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - publication_network
   
 networks:
   publication_network:
