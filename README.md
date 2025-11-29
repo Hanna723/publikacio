@@ -53,6 +53,10 @@ A szkript a következő lépéseket hajtja végre:
   - deployolás
 - Az alkalmazás automatikus megnyitása böngészőben, amint az készen áll
 
+Leállítás:
+
+`minikube delete --all`
+
 ## Terraform
 
 Az alkalmazás Terraform használatával a következő szkripptel indítható:
@@ -63,7 +67,7 @@ A szkript meg fog állni, hogy felhasználói inputot kérjen. Ekkor a `yes` vá
 
 Leállítás:
 
-`terrafrom destroy`
+`terraform destroy`
 
 Itt is szükséges a `yes` válasz megadása.
 
@@ -133,7 +137,7 @@ A docker indítása után a `publication` adatbázis tartalmaz néhány kezdeti 
 - lastName
 - role: a szerep id-ja, amibe a felhasználó tartozik
 
-Kezdtei felhasználók (jelszó: password):
+Kezdeti felhasználók (jelszó: password):
 
 - author1@mailinator.com
 - author2@mailinator.com
