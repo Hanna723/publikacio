@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
@@ -24,7 +24,6 @@ import { User } from 'src/app/shared/models/User';
   selector: 'app-signup',
   imports: [
     AuthContainerComponent,
-    CommonModule,
     FormsModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -32,8 +31,8 @@ import { User } from 'src/app/shared/models/User';
     MatInputModule,
     MatSelectModule,
     ReactiveFormsModule,
-    RouterLink,
-  ],
+    RouterLink
+],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
@@ -78,7 +77,7 @@ export class SignupComponent implements OnInit {
     };
 
     this.authService.register(user).subscribe({
-      next: (user) => {
+      next: () => {
         this.router.navigateByUrl('auth/login');
       },
       error: (error) => {

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -17,14 +17,13 @@ import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-reviewer-dialog',
   imports: [
-    CommonModule,
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    FormsModule,
-  ],
+    FormsModule
+],
   templateUrl: './reviewer-dialog.component.html',
   styleUrl: './reviewer-dialog.component.scss',
 })

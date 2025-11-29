@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Output } from '@angular/core';
 import {
   FormControl,
@@ -20,15 +20,14 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   selector: 'app-login',
   imports: [
     AuthContainerComponent,
-    CommonModule,
     FormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
-    RouterLink,
-  ],
+    RouterLink
+],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -54,7 +53,7 @@ export class LoginComponent {
         this.loginForm.controls['password'].value
       )
       .subscribe({
-        next: (user) => {
+        next: () => {
           this.loginEvent.emit();
           this.router.navigateByUrl('/article/list');
         },

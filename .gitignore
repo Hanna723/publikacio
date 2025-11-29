@@ -1,0 +1,4 @@
+.terraform
+data/mongo
+terraform.tfstate
+terraform.tfstate.backup

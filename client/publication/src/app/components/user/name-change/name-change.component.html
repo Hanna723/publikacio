@@ -7,23 +7,29 @@
       <mat-form-field>
         <mat-label>First name</mat-label>
         <input matInput required formControlName="firstName" />
-        <mat-error *ngIf="nameForm.controls['firstName'].errors?.['required']"
-          >Please enter your first name!</mat-error
-        >
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Last name</mat-label>
-        <input matInput required formControlName="lastName" />
-        <mat-error *ngIf="nameForm.controls['lastName'].errors?.['required']"
-          >Please enter your last name!</mat-error
-        >
-        <mat-error *ngIf="nameForm.errors?.['unknown']"
-          >Unknown error</mat-error
-        >
-      </mat-form-field>
-      <button mat-flat-button type="submit" [disabled]="!nameForm.valid">
-        Save
-      </button>
-    </form>
-  </mat-card-content>
-</mat-card>
+        @if (nameForm.controls['firstName'].errors?.['required']) {
+          <mat-error
+            >Please enter your first name!</mat-error
+            >
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Last name</mat-label>
+          <input matInput required formControlName="lastName" />
+          @if (nameForm.controls['lastName'].errors?.['required']) {
+            <mat-error
+              >Please enter your last name!</mat-error
+              >
+            }
+            @if (nameForm.errors?.['unknown']) {
+              <mat-error
+                >Unknown error</mat-error
+                >
+              }
+            </mat-form-field>
+            <button mat-flat-button type="submit" [disabled]="!nameForm.valid">
+              Save
+            </button>
+          </form>
+        </mat-card-content>
+      </mat-card>

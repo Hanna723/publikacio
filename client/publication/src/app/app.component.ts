@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -15,7 +15,7 @@ export class AppComponent {
   title = 'publication';
   @ViewChild('header') header!: HeaderComponent;
 
-  onComponentChange(componentRef: any): void {
+  onComponentChange(componentRef: ComponentRef<unknown>): void {
     if (componentRef instanceof LoginComponent) {
       componentRef.loginEvent.subscribe(() => {
         this.header.isAuthenticated = true;

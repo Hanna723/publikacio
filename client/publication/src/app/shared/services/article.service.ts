@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Article } from '../models/Article';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
-  URL_PREFIX = 'http://localhost:5000/article/';
+  URL_PREFIX = environment.apiUrl + '/article/';
 
   constructor(private http: HttpClient) {}
 

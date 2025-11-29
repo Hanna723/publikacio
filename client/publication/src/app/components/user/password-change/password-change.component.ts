@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -19,7 +19,6 @@ import { DialogComponent } from 'src/app/shared/components/dialog/dialog.compone
 @Component({
   selector: 'app-password-change',
   imports: [
-    CommonModule,
     MatButtonModule,
     MatCardModule,
     MatButtonModule,
@@ -27,8 +26,8 @@ import { DialogComponent } from 'src/app/shared/components/dialog/dialog.compone
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    ReactiveFormsModule,
-  ],
+    ReactiveFormsModule
+],
   templateUrl: './password-change.component.html',
   styleUrl: './password-change.component.scss',
 })

@@ -1,26 +1,30 @@
 <div class="container">
   <div mat-dialog-title>New reviewer</div>
   <mat-dialog-content>
-    <mat-form-field *ngIf="reviewerCount && reviewerCount > 0">
-      <mat-label>Reviewer</mat-label>
-      <mat-select required [(value)]="selectedReviewer">
-        @for (reviewer of reviewers; track reviewer) {
-        <mat-option [value]="reviewer"
-          >{{ reviewer.firstName }} {{ reviewer.lastName }}</mat-option
+    @if (reviewerCount && reviewerCount > 0) {
+      <mat-form-field>
+        <mat-label>Reviewer</mat-label>
+        <mat-select required [(value)]="selectedReviewer">
+          @for (reviewer of reviewers; track reviewer) {
+            <mat-option [value]="reviewer"
+              >{{ reviewer.firstName }} {{ reviewer.lastName }}</mat-option
+              >
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+      @if (reviewerCount == 0) {
+        <div>There are no more reviewers available.</div>
+      }
+    </mat-dialog-content>
+    <div mat-dialog-actions>
+      <button mat-raised-button (click)="onCancel()">Cancel</button>
+      <button
+        mat-flat-button
+        (click)="onSubmit()"
+        [disabled]="reviewerCount == 0 || !selectedReviewer"
         >
-        }
-      </mat-select>
-    </mat-form-field>
-    <div *ngIf="reviewerCount == 0">There are no more reviewers available.</div>
-  </mat-dialog-content>
-  <div mat-dialog-actions>
-    <button mat-raised-button (click)="onCancel()">Cancel</button>
-    <button
-      mat-flat-button
-      (click)="onSubmit()"
-      [disabled]="reviewerCount == 0 || !selectedReviewer"
-    >
-      Ok
-    </button>
+        Ok
+      </button>
+    </div>
   </div>
-</div>

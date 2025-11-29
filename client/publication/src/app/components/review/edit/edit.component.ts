@@ -1,5 +1,5 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormControl,
@@ -23,15 +23,14 @@ import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-edit',
   imports: [
-    CommonModule,
     FormsModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule,
-  ],
+    ReactiveFormsModule
+],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss',
 })
@@ -82,7 +81,7 @@ export class EditComponent implements OnInit {
   }
 
   triggerResize() {
-    let previousScrollY = window.scrollY;
+    const previousScrollY = window.scrollY;
     this.autosize.resizeToFitContent(true);
     window.scrollTo({ top: previousScrollY });
   }

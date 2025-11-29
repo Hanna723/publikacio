@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Review } from '../models/Review';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReviewService {
-  URL_PREFIX = 'http://localhost:5000/review/';
+  URL_PREFIX = environment.apiUrl + '/review/';
 
   constructor(private http: HttpClient) {}
 

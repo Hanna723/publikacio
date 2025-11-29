@@ -1,43 +1,57 @@
-<mat-card appearance="outlined" *ngIf="article">
-  <mat-card-actions>
-    <mat-chip-set>
-      <mat-chip *ngIf="article.readyForReview">Ready for review</mat-chip>
-      <mat-chip *ngIf="article.isAccepted">Accepted</mat-chip>
-      <mat-chip *ngIf="article.isAccepted === false">Rejected</mat-chip>
-    </mat-chip-set>
-    <div>
-      <button
-        mat-mini-fab
-        *ngIf="user?._id === article.author && !article.readyForReview"
-        (click)="editArticle()"
-      >
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button
-        mat-mini-fab
-        *ngIf="user?._id === article.author"
-        (click)="deleteArticle()"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-  </mat-card-actions>
-  <mat-card-header>
-    <mat-card-title>{{ article.title }}</mat-card-title>
-    <mat-card-subtitle>By: {{ authorName }}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>{{ article.content }}</mat-card-content>
-</mat-card>
-<app-reviewer-list
-  *ngIf="article"
-  [article]="article"
-  [reviewers]="article.reviewers"
-  [userRole]="user?.role"
-></app-reviewer-list>
-<app-list
-  *ngIf="article"
-  [articleId]="article._id"
-  [userRole]="user?.role"
-></app-list>
-<div *ngIf="!article" class="notFound">Not found</div>
+@if (article) {
+  <mat-card appearance="outlined">
+    <mat-card-actions>
+      <mat-chip-set>
+        @if (article.readyForReview) {
+          <mat-chip>Ready for review</mat-chip>
+        }
+        @if (article.isAccepted) {
+          <mat-chip>Accepted</mat-chip>
+        }
+        @if (article.isAccepted === false) {
+          <mat-chip>Rejected</mat-chip>
+        }
+      </mat-chip-set>
+      <div>
+        @if (user?._id === article.author && !article.readyForReview) {
+          <button
+            mat-mini-fab
+            (click)="editArticle()"
+            >
+            <mat-icon>edit</mat-icon>
+          </button>
+        }
+        @if (user?._id === article.author) {
+          <button
+            mat-mini-fab
+            (click)="deleteArticle()"
+            >
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
+      </div>
+    </mat-card-actions>
+    <mat-card-header>
+      <mat-card-title>{{ article.title }}</mat-card-title>
+      <mat-card-subtitle>By: {{ authorName }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>{{ article.content }}</mat-card-content>
+  </mat-card>
+}
+@if (article) {
+  <app-reviewer-list
+    [article]="article"
+    [reviewers]="article.reviewers"
+    [userRole]="user?.role"
+  ></app-reviewer-list>
+}
+@if (article) {
+  <app-list
+    [articleId]="article._id"
+    [userRole]="user?.role"
+  ></app-list>
+}
+@if (!article) {
+  <div class="notFound">Not found</div>
+}
 <div class="end"></div>
